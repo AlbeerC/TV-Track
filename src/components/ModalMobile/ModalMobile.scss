@@ -1,0 +1,48 @@
+@import '../../scss/variables';
+
+.modal-mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal {
+        z-index: 1000;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+
+        .search-mobile-bar {
+            margin-top: 2rem;
+            border-radius: .5rem;
+            padding: 1.2rem .5rem;
+            border: none;
+            width: 80%;
+        }
+        
+        button {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            border-radius: .5rem;
+            background-color: $mainColor;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+        
+            &:hover {
+                background-color: #198a2e;
+            }
+        }
+    }
+}

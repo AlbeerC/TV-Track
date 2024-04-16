@@ -1,0 +1,74 @@
+@import '../../scss/variables';
+
+header {
+    background-color: #000000;
+    padding: 2rem 7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @include responsive(768) {
+        padding: 2rem;
+    }
+
+    h1 {
+        color: $mainColor;
+        font-size: 3rem;
+        z-index: 99999999;
+    }
+
+    .search-bar {
+        border-radius: 1rem;
+        padding: 1rem 2rem;
+        border: none;
+
+        @include responsive(768) {
+            display: none;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+
+        @include responsive(768) {
+            display: none;
+        }
+        
+        button {
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: $white;
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                color: $mainColor;
+            }
+        }
+
+        span {
+            color: $mainColor;
+            padding: 0 1rem;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+    }
+
+    .menu {
+        border: none;
+        background-color: transparent;
+        z-index: 99999999;
+
+        @media (min-width: 769px) {
+            display: none;
+        }
+
+        svg {
+            color: $white;
+            font-size: 4rem;
+        }
+    }
+}

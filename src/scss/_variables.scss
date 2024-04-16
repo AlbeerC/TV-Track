@@ -9,3 +9,20 @@ $white: #ffffff;
 // Fonts
 $titleFont: "Lalezar", system-ui;
 $textFont: "Laila", serif;
+
+
+// Media queries
+$pc: 992px;
+$tablet: 768px;
+
+@mixin responsive ($medida) {
+    @if $medida == 992 {
+        @media (max-width: $pc) {
+            @content;
+        }
+    } @else if $medida == 768 {
+        @media (max-width: $tablet) {
+            @content;
+        }
+    }
+}

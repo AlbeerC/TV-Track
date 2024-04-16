@@ -1,0 +1,104 @@
+@import '../../scss/variables';
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .modal {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      width: 40vw;
+      height: auto;
+      overflow: auto;
+      z-index: 1000;
+
+      @include responsive(992) {
+        width: 80vw;
+      }
+  
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        h2 {
+          margin: 0;
+        }
+
+        .close-modal {
+          font-size: 2.5rem;
+          padding: .5rem 1.5rem !important;
+          border-radius: none !important;
+        }
+      }
+  
+      form {
+        margin-top: 2rem;
+  
+        .field {
+          margin-bottom: 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+  
+          label {
+            display: block;
+            margin-bottom: .5rem;
+            font-weight: bold;
+
+            span {
+                color: red;
+            }
+          }
+  
+          input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: .5rem;
+            border: 1px solid #000000;
+          }
+        }
+      }
+  
+      button {
+        padding: 1rem 2rem;
+        border-radius: .5rem;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 2rem;
+        background-color: #000000;
+  
+        &[type='submit'] {
+          background-color: $mainColor;
+
+          &:hover,
+          &:focus {
+            background-color: #1a732e;
+          }
+        }
+      }
+
+      .google {
+        width: 100%;
+        background-color: #2020e8;
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+    }
+  }
+  
