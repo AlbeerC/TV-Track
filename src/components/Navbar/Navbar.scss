@@ -31,29 +31,57 @@ header {
     .buttons {
         display: flex;
         align-items: center;
+        color: #ffffff;
 
         @include responsive(768) {
             display: none;
         }
-        
-        button {
-            background: transparent;
-            border: none;
-            font-size: 2rem;
-            color: $white;
-            font-weight: bold;
-            cursor: pointer;
 
-            &:hover {
-                color: $mainColor;
+        .logged {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            
+            p {
+                font-size: 2rem;
+                font-weight: bold;
+                cursor: pointer;
             }
+
+            button {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+        
+                svg {
+                    color: $white;
+                    font-size: 3rem;
+                }
+            }    
         }
 
-        span {
-            color: $mainColor;
-            padding: 0 1rem;
-            font-size: 3rem;
-            font-weight: 900;
+        .not-logged {
+
+            button {
+                background: transparent;
+                border: none;
+                font-size: 2rem;
+                color: $white;
+                font-weight: bold;
+                cursor: pointer;
+    
+                &:hover {
+                    color: $mainColor;
+                }
+            }
+    
+            span {
+                color: $mainColor;
+                padding: 0 1rem;
+                font-size: 3rem;
+                font-weight: 900;
+            }
+
         }
     }
 
