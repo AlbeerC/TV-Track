@@ -1,18 +1,21 @@
 import { useApi } from "../../context/ApiContext"
-import './SerieList.scss'
 
-function SerieList () {
+function SerieList ( {loadMore, items} ) {
 
     const api = useApi()
-    const { series, imageProps, loadMore, loading } = api
+    const { imageProps, loading } = api
     const pageSize = 20
+
+    const handleLoadMore = (e) => {
+      console.log("Cargar más")
+      loadMore(e)
+    }
   
     return (
-      <section className="serie-list">
-        <h2>Series</h2>
+      <section className="results-list">
         <article className="map">
-          {series.slice(0, pageSize).map((prod) => (
-            <div className="serie" key={prod.id}>
+          {items.slice(0, pageSize).map((prod) => (
+            <div className="result" key={prod.id}>
               {prod.poster_path && (
                 <img src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`}alt={prod.title} />)}
                 <h3>{prod.title || prod.name}</h3>
@@ -24,10 +27,10 @@ function SerieList () {
             </div> 
           ))}
           {loading && <p>Loading...</p>}
-          {!loading && series.length > pageSize && (
-            <button onClick={loadMore}>Ver más</button>
-          )}
         </article>
+        {!loading && items.length > pageSize && (
+            <button className="load-more" onClick={handleLoadMore}>Ver más</button>
+          )}
       </section>
     )
 }

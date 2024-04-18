@@ -1,17 +1,16 @@
 import { useApi } from "../../context/ApiContext"
-import './MovieList.scss'
 
-function MovieList () {
+function MovieList ( {loadMore, items} ) {
 
     const api = useApi()
-    const { movies, imageProps, loadMore, loading } = api
+    const { imageProps, loading } = api
     const pageSize = 20
+
     return (
-      <section className="movie-list">
-        <h2>Películas</h2>
+      <section className="results-list">
         <article className="map">
-          {movies.slice(0, pageSize).map((prod) => (
-            <div className="movie" key={prod.id}>
+          {items.slice(0, pageSize).map((prod) => (
+            <div className="result" key={prod.id}>
               {prod.poster_path && (
                 <img src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`} alt={prod.title} />)}
                 <h3>{prod.title || prod.name}</h3>
@@ -23,10 +22,10 @@ function MovieList () {
             </div>
           ))}
           {loading && <p>Loading...</p>}
-          {!loading && movies.length > pageSize && (
-            <button onClick={loadMore}>Ver más</button>
-          )}
         </article>
+        {!loading && items.length > pageSize && (
+            <button className="load-more" onClick={loadMore}>Ver más</button>
+          )}
       </section>
     )
 }
