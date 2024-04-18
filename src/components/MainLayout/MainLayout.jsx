@@ -8,7 +8,7 @@ import { useApi } from "../../context/ApiContext"
 import { useState } from 'react'
 
 function MainLayout () {
-    const { data, loadMore } = useApi();
+    const { data, loadMore } = useApi()
     const [selectedTab, setSelectedTab] = useState("trendings")
 
     const handleTabChange = (tab) => {

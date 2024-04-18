@@ -14,7 +14,7 @@ function SerieList ( {loadMore, items} ) {
     return (
       <section className="results-list">
         <article className="map">
-          {items.slice(0, pageSize).map((prod) => (
+          {items.map((prod) => (
             <div className="result" key={prod.id}>
               {prod.poster_path && (
                 <img src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`}alt={prod.title} />)}
@@ -28,7 +28,7 @@ function SerieList ( {loadMore, items} ) {
           ))}
           {loading && <p>Loading...</p>}
         </article>
-        {!loading && items.length > pageSize && (
+        {!loading && items.length >= pageSize && (
             <button className="load-more" onClick={handleLoadMore}>Ver más</button>
           )}
       </section>

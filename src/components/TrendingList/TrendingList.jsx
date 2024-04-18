@@ -10,7 +10,7 @@ function TrendingList( {items, loadMore} ) {
     return (
       <section className="results-list">
         <article className="map">
-          {items.slice(0, pageSize).map((prod) => (
+          {items.map((prod) => (
             <div className='result' key={prod.id}>
               {prod.poster_path && (
               <img src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`} alt={prod.title} /> )}
@@ -20,7 +20,7 @@ function TrendingList( {items, loadMore} ) {
           ))}
           {loading && <p>Loading...</p>}
         </article>
-        {!loading && items.length > pageSize && (
+        {!loading && items.length >= pageSize && (
           <button className='load-more' onClick={loadMore}>Ver más</button>
         )}
       </section>

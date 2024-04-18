@@ -21,6 +21,11 @@ main {
                 font-weight: bold;
                 background-color: transparent;
                 border: none;
+
+                @include responsive(768) {
+                    margin: 1rem;
+                    font-size: 2rem;
+                }
             }
 
             .active {

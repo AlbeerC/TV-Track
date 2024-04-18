@@ -27,6 +27,7 @@ function Navbar () {
 
     const handleMobileModal = () => {
         setOpenMenu(!openMenu)
+        document.body.classList.toggle('modal-opened', !openMenu)
     }
 
     const handleLoginModal = () => {

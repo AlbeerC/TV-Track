@@ -1,0 +1,21 @@
+@import '../../scss/variables';
+
+footer {
+    color: #000000;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 2px solid $mainColor;
+
+    @include responsive(768) {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    a {
+        color: $mainColor;
+        font-weight: bold;
+    }
+}

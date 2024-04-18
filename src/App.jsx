@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import MainLayout from './components/MainLayout/MainLayout'
 import Dashboard from './components/Dashboard/Dashboard'
+import Footer from './components/Footer/Footer'
 // Context
 import ApiProvider from './context/ApiContext'
 import AuthProvider from './context/AuthContext'
@@ -18,6 +19,7 @@ function App() {
           <Route path='/' element={<MainLayout /> } />
           <Route path='/profile' element={<Dashboard /> } />
         </Routes>
+        <Footer />
       </BrowserRouter>
       </AuthProvider>
     </ApiProvider>
