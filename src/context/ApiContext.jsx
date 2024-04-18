@@ -8,15 +8,8 @@ function ApiProvider({ children }) {
   const [page, setPage] = useState({ trendings: 1, movies: 1, series: 1 })
   const [data, setData] = useState({trendings: [], movies: [], series: []})
 
-  const loadMore = (type) => {
-    setPage((prevPage) => ({
-      ...prevPage,
-      [type]: prevPage[type] + 1,
-    }))
-  }
-
   const callApi = async (endpoint, type) => {
-    setLoading(true);
+    setLoading(true)
     try {
       const response = await fetch(`${endpoint}&page=${page[type]}`)
       const jsonData = await response.json()
@@ -37,6 +30,13 @@ function ApiProvider({ children }) {
     callApi(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}`, "series")
   }, [page])
 
+  const loadMore = (type) => {
+    setPage((prevPage) => ({
+      ...prevPage,
+      [type]: prevPage[type] + 1,
+    }))
+  }
+  
   const imageProps = {
     baseURL: "https://image.tmdb.org/t/p/",
     posterSize: "w200",

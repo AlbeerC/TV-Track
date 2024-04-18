@@ -1,0 +1,30 @@
+@import '../../scss/variables';
+
+.filter-buttons {
+    text-align: center;
+    color: #000000;
+    margin: 5rem;
+
+    @include responsive(768) {
+        margin: 5rem 1rem;
+    }
+
+    button {
+        font-size: 2.5rem;
+        cursor: pointer;
+        margin: 0 2rem;
+        color: #000000;
+        font-weight: bold;
+        background-color: transparent;
+        border: none;
+
+        @include responsive(768) {
+            margin: 1rem;
+            font-size: 2rem;
+        }
+    }
+
+    .active {
+        color: $mainColor;
+    }
+}
