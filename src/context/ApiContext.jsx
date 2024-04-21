@@ -25,9 +25,9 @@ function ApiProvider({ children }) {
   }
   
   useEffect(() => {
-    callApi(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`, "trendings")
-    callApi(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`, "movies")
-    callApi(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}`, "series")
+    callApi(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&language=es`, "trendings")
+    callApi(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=es`, "movies")
+    callApi(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=es`, "series")
   }, [page])
 
   const loadMore = (type) => {

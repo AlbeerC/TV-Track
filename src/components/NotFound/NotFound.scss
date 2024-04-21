@@ -1,0 +1,19 @@
+@import '../../scss/variables';
+
+.not-found {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    align-items: center;
+
+    h2 {
+        font-size: 4rem;
+    }
+    
+    a {
+        color: $mainColor;
+        font-size: 3rem;
+        font-weight: bold;
+    }
+}

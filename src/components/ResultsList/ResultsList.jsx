@@ -1,5 +1,7 @@
-import { useApi } from "../../context/ApiContext"
 import './ResultsList.scss'
+import { useApi } from "../../context/ApiContext"
+import Loading from '../Loading/Loading'
+import { Link } from 'react-router-dom'
 
 function ResultList({ loadMore, items }) {
     const api = useApi()
@@ -12,7 +14,12 @@ function ResultList({ loadMore, items }) {
                 {items.map((prod) => (
                     <div className="result" key={prod.id}>
                         {prod.poster_path && (
-                            <img src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`} alt={prod.title || prod.name} />
+                            <Link to={prod.release_date ? `/detail/movie/${prod.id}` : `/detail/serie/${prod.id}`}>
+                            <img 
+                                src={`${imageProps.baseURL}${imageProps.posterSize}${prod.poster_path}`} 
+                                alt={prod.title || prod.name} 
+                            />
+                        </Link>
                         )}
                         <h3>{prod.title || prod.name}</h3>
                         <div className="bottom">
@@ -23,8 +30,8 @@ function ResultList({ loadMore, items }) {
                         </div>
                     </div>
                 ))}
-                {loading && <p>Loading...</p>}
             </article>
+            {loading && <Loading />}
             {!loading && items.length >= pageSize && (
                 <button className="load-more" onClick={loadMore}>Ver más</button>
             )}
