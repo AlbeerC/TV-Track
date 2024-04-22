@@ -36,6 +36,7 @@ function Navbar () {
 
     const closeModal = () => {
         setOpenMenu(false)
+        document.body.classList.toggle('modal-opened')
     }
 
     return (
