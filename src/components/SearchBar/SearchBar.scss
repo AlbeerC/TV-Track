@@ -1,0 +1,28 @@
+@import '../../scss/variables';
+
+.search {
+    position: relative;
+
+    @include responsive(768) {
+        width: 80%;
+    }
+
+    input {
+        padding: .5rem 8rem .5rem .5rem;
+        border-radius: .5rem;
+        width: 100%;
+
+        @include responsive(768) {
+            padding: 1rem 8rem 1rem 1rem;
+        }
+    }
+
+    svg {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #88888898;
+        pointer-events: none;
+    }
+}

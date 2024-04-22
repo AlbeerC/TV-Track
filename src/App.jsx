@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer'
 import NotFound from './components/NotFound/NotFound'
 import MovieDetailContainer from './components/MovieDetailContainer/MovieDetailContainer'
 import SerieDetailContainer from './components/SerieDetailContainer/SerieDetailContainer'
+import SearchResults from './components/SearchResults/SearchResults'
 // Context
 import ApiProvider from './context/ApiContext'
 import AuthProvider from './context/AuthContext'
@@ -24,6 +25,7 @@ function App() {
           <Route path='*' element={<NotFound /> } />
           <Route path='/detail/movie/:id' element={ <MovieDetailContainer /> } />
           <Route path='/detail/serie/:id' element={ <SerieDetailContainer /> } />
+          <Route path='/search/:searchTerm' element={<SearchResults />}/>
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -18,11 +18,7 @@ header {
         z-index: 99999999;
     }
 
-    .search-bar {
-        border-radius: 1rem;
-        padding: 1rem 2rem;
-        border: none;
-
+    .search {
         @include responsive(768) {
             display: none;
         }

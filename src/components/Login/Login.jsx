@@ -1,8 +1,8 @@
 import './Login.scss'
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa"
 import { Link, Navigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext';
-import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext'
+import { useState } from 'react'
 
 function Login ( {handleLoginModal} ) {
 

@@ -1,18 +1,24 @@
 import './ModalMobile.scss'
-import { IoLogOutSharp } from "react-icons/io5"
 import { useAuth } from '../../context/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import SearchBar from '../SearchBar/SearchBar'
 
-function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal}) {
+function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal, closeModal}) {
 
     const auth = useAuth()
 
     const getUser = auth.getUserFromLocalStorage()
     const user = getUser ? getUser.displayName || auth.cutDomainFromEmail(getUser?.email) : null
     const isLogged = auth.isLogged
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         auth.logout()
+    }
+
+    const goToProfile = () => {
+        navigate('/profile')
+        closeModal()
     }
 
     return (
@@ -20,15 +26,17 @@ function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal}
             {
                 isLogged ? 
                     <div className="modal-logged">
-                        <Link to='/profile'><p>{user}</p></Link>
-                        <button onClick={handleLogout}><IoLogOutSharp /></button>
+                        <h3>{user}</h3>
+                        <button onClick={goToProfile} to='/profile'>Ir a mi perfil</button>
+                        <button onClick={handleLogout}>Cerrar sesión</button>
+                        <SearchBar closeModal={closeModal}/>
                     </div>
 
                 :
                     <div className='modal-not-logged'>
                         <button onClick={handleLoginModal}>Iniciar sesión</button>
                         <button onClick={handleRegisterModal}>Registrarse</button>
-                        <input className='search-mobile-bar' type='search' placeholder='Buscar película o serie'/>
+                        <SearchBar closeModal={closeModal}/>
                     </div>
             }
         </div>

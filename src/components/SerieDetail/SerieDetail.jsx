@@ -13,18 +13,22 @@ function SerieDetail ( {data} ) {
     }
 
     const formatDate = (date) => {
-        const parsedDate = new Date(date)
-        const formattedDate = format(parsedDate, 'dd/MM/yyyy', { locale: esLocale })
-        return formattedDate
+        if (date === "") {
+            return
+        } else {
+            const parsedDate = new Date(date)
+            const formattedDate = format(parsedDate, 'dd/MM/yyyy', { locale: esLocale })
+            return formattedDate
+        }
     }
 
     // Stars in rating
     const renderStarIcons = (rating) => {
-        const filledStars = Math.floor(rating)
+        const filledStars = Math.floor(rating / 2)
         const halfStar = rating % 1 !== 0
-        const emptyStars = 10 - filledStars - (halfStar ? 1 : 0);
+        const emptyStars = 5 - filledStars - (halfStar ? 1 : 0)
     
-        const starIcons = [];
+        const starIcons = []
     
         for (let i = 0; i < filledStars; i++) {
             starIcons.push(<FaStar key={i} />)

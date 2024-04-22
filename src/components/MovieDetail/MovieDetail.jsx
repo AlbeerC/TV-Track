@@ -18,27 +18,31 @@ function MovieDetail ( {data} ) {
         const remainingMinutes = runtime % 60
       
         if (hours === 0) {
-          return `${remainingMinutes} min`;
+          return `${remainingMinutes} min`
         } else if (remainingMinutes === 0) {
-          return `${hours}hr`;
+          return `${hours}hr`
         } else {
           return `${hours}hr ${remainingMinutes}min`
         }
     }
 
     const formatDate = (date) => {
-        const parsedDate = new Date(date)
-        const formattedDate = format(parsedDate, 'dd/MM/yyyy', { locale: esLocale })
-        return formattedDate
+        if (date === "") {
+            return
+        } else {
+            const parsedDate = new Date(date)
+            const formattedDate = format(parsedDate, 'dd/MM/yyyy', { locale: esLocale })
+            return formattedDate
+        }
     }
 
     // Stars in rating
     const renderStarIcons = (rating) => {
-        const filledStars = Math.floor(rating)
-        const halfStar = rating % 1 !== 0
-        const emptyStars = 10 - filledStars - (halfStar ? 1 : 0);
+        const filledStars = Math.floor(rating / 2)
+        const halfStar = rating % 2 !== 0
+        const emptyStars = 5 - filledStars - (halfStar ? 1 : 0)
     
-        const starIcons = [];
+        const starIcons = []
     
         for (let i = 0; i < filledStars; i++) {
             starIcons.push(<FaStar key={i} />)
@@ -52,12 +56,9 @@ function MovieDetail ( {data} ) {
             starIcons.push(<FaRegStar key={i + filledStars} />)
         }
     
-        return starIcons;
-    };
+        return starIcons
+    }
     
-    
-    
-
     return (
         <section className="movie-detail">
             <article className="poster" style={bgStyles}>
