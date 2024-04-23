@@ -1,7 +1,7 @@
 import './SearchBar.scss'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa"
 
 function SearchBar ( {closeModal} ) {
 
@@ -11,7 +11,7 @@ function SearchBar ( {closeModal} ) {
     const handleSearch = () => {
         navigate(`/search/${searchTerm}`)
         setSearchTerm("")
-        closeModal()
+        if (closeModal) { closeModal() }
     }
 
     const handleKeyPress = (event) => {

@@ -1,5 +1,6 @@
-import { auth } from '../firebase/config'
 import { createContext, useContext, useState, useEffect } from 'react'
+import { auth, db } from '../firebase/config'
+import { doc, setDoc, collection } from "firebase/firestore";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth'
 
 const AuthContext = createContext()
@@ -7,13 +8,20 @@ const AuthContext = createContext()
 function AuthProvider ( {children} ) {
     const [isLogged, setIsLogged] = useState(false)
     const [error, setError] = useState(null)
-    const [profileImage, setProfileImage] = useState('')
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setUser(user)
+        })
+
+        return () => unsubscribe()
+    }, [])
 
     useEffect(() => {
         const storedUser = getUserFromLocalStorage()
         if (storedUser) {
           setIsLogged(true)
-          setProfileImage(storedUser.profileImage || '')
         }
       }, [])
 
@@ -24,6 +32,7 @@ function AuthProvider ( {children} ) {
             setIsLogged(true)
             setError(null)
             storeUserInLocalStorage(auth.currentUser)
+            saveUserToFirestore(auth.currentUser)
         } catch (error) {
             setError(`Error al registrar usuario: ${error.message}`)
         }
@@ -35,6 +44,7 @@ function AuthProvider ( {children} ) {
             setIsLogged(true)
             setError(null)
             storeUserInLocalStorage(auth.currentUser)
+            saveUserToFirestore(auth.currentUser)
         } catch (error) {
             setError(`Error al ingresar usuario: ${error.message}`)
         }
@@ -47,6 +57,7 @@ function AuthProvider ( {children} ) {
             setIsLogged(true)
             setError(null)
             storeUserInLocalStorage(auth.currentUser)
+            saveUserToFirestore(auth.currentUser)
         } catch (error) {
             setError(`Error al ingresar con google: ${error.message}`)
         }
@@ -73,6 +84,11 @@ function AuthProvider ( {children} ) {
         }
     }
 
+    const getUserId = () => {
+        const user = getUser()
+        return user ? user.uid : null
+    }
+
     const storeUserInLocalStorage = (user) => {
         localStorage.setItem('user', JSON.stringify(user))
     }
@@ -86,6 +102,21 @@ function AuthProvider ( {children} ) {
         localStorage.removeItem('user')
     }
 
+    const saveUserToFirestore = async (user) => {
+        try {
+            const userId = getUserId()
+            const userRef = doc(db, "users", userId)
+
+            await setDoc(doc(userRef, 'watchlist', userId), {})
+            await setDoc(doc(userRef, 'watched', userId), {})    
+
+            await setDoc(userRef, {
+                email: user.email
+            })
+        } catch (error) {
+            console.error("Error saving user in Firestore:", error)
+        }
+    }
 
     // Other functions
     const cutDomainFromEmail = (email) => {
@@ -100,7 +131,7 @@ function AuthProvider ( {children} ) {
     }
 
     return (
-        <AuthContext.Provider value={{isLogged, error, register, login, loginWithGoogle, logout, getUser, getUserFromLocalStorage, cutDomainFromEmail}}>
+        <AuthContext.Provider value={{isLogged, error, register, login, loginWithGoogle, logout, getUser, getUserFromLocalStorage, cutDomainFromEmail, getUserId}}>
             {children}
         </AuthContext.Provider>
     )

@@ -4,7 +4,7 @@ import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt} from "react-icons/
 import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
 
-function MovieDetail ( {data} ) {
+function MovieDetail ( {data, addToWatchList, addToWatched} ) {
 
     const api = useApi()
     const { imageProps } = api
@@ -58,6 +58,17 @@ function MovieDetail ( {data} ) {
     
         return starIcons
     }
+
+    // Add to list
+    const posterPath = imageProps.baseURL +imageProps.posterSize + data.poster_path
+
+    const handleAddToWatchList = () => {
+        addToWatchList({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+    }
+
+    const handleAddToWatched = () => {
+        addToWatched({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+    }
     
     return (
         <section className="movie-detail">
@@ -84,12 +95,14 @@ function MovieDetail ( {data} ) {
                         <p>Valoración de los usuarios</p>
                     </div>
                     <div className="add-buttons">
-                        <button><FaEye /></button>
-                        <button><FaBookmark /></button>
+                        <button onClick={handleAddToWatched}><FaEye /></button>
+                        <button onClick={handleAddToWatchList}><FaBookmark /></button>
                     </div>
                     <p>{data.overview}</p>
-                    <p className='companies'>{data.production_companies.map((companie) => (
-                        <span key={companie.id}>{companie.name}</span>
+                    <p className='companies'>{data.production_companies.map((companie, index) => (
+                        <span key={companie.id}>{companie.name}
+                            {index !== data.production_companies.length - 1 && ','}
+                        </span>
                     ))}</p>
                 </div>
             </article>

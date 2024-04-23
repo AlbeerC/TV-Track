@@ -3,10 +3,20 @@ import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt} from "react-icons/
 import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
 
-function SerieDetail ( {data} ) {
+function SerieDetail ( {data, addToWatchList, addToWatched} ) {
 
     const api = useApi()
     const { imageProps } = api
+    
+    const validateData = () => {
+        const importantProperties = ['name', 'first_air_date', 'genres', 'vote_average', 'overview', 'production_companies', 'poster_path']
+        return importantProperties.some(prop => data && data[prop])
+    }
+
+    if (!validateData()) {
+        // Mostrar mensaje de error o notificación
+        return <p>Error: No se pudieron cargar los datos de la serie.</p>
+    }
 
     const bgStyles = {
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${imageProps.baseURL + 'w780' + data.backdrop_path})`
@@ -44,6 +54,17 @@ function SerieDetail ( {data} ) {
     
         return starIcons
     }
+
+    // Add to list
+    const posterPath = imageProps.baseURL +imageProps.posterSize + data.poster_path
+
+    const handleAddToWatchList = () => {
+        addToWatchList({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+    }
+
+    const handleAddToWatched = () => {
+        addToWatched({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+    }
     
     return (
         <section className="movie-detail">
@@ -70,12 +91,14 @@ function SerieDetail ( {data} ) {
                         <p>Valoración de los usuarios</p>
                     </div>
                     <div className="add-buttons">
-                        <button><FaEye /></button>
-                        <button><FaBookmark /></button>
+                        <button onClick={handleAddToWatched}><FaEye /></button>
+                        <button onClick={handleAddToWatchList}><FaBookmark /></button>
                     </div>
                     <p>{data.overview}</p>
-                    <p className='companies'>{data.production_companies.map((companie) => (
-                        <span key={companie.id}>{companie.name}</span>
+                    <p className='companies'>{data.production_companies.map((companie, index) => (
+                        <span key={companie.id}>{companie.name}
+                            {index !== data.production_companies.length - 1 && ','}
+                        </span>
                     ))}</p>
                 </div>
             </article>

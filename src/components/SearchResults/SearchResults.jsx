@@ -24,11 +24,13 @@ function SearchResults () {
         <section className="search-results">
             <h2>Resultados de la búsqueda: "{searchTerm}"</h2>
             <article className="map">
-                {searchResults.map((result) => (
+                {searchResults.filter((result) => result.media_type !== "person").map((result) => (
                     <div key={result.id} className="map-result">
                         <Link to={result.release_date || result.title ? `/detail/movie/${result.id}` : `/detail/serie/${result.id}`}>
                             <img
-                                src={result.poster_path === null ? "https://images.squarespace-cdn.com/content/v1/5a79de08aeb625f12ad4f85a/1527015265032-KYY1AQ4NCW6NB7BK1NDH/placeholder-image-vertical.png" : `https://image.tmdb.org/t/p/w200/${result.poster_path}`}
+                                src={result.poster_path === null ? 
+                                    "https://images.squarespace-cdn.com/content/v1/5a79de08aeb625f12ad4f85a/1527015265032-KYY1AQ4NCW6NB7BK1NDH/placeholder-image-vertical.png" : 
+                                    `https://image.tmdb.org/t/p/w200/${result.poster_path}`}
                                 alt={result.name || result.title} 
                             />
                         </Link>
