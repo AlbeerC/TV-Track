@@ -1,13 +1,17 @@
 import './MovieDetail.scss'
 import { useApi } from '../../context/ApiContext'
+import { useAuth } from '../../context/AuthContext'
 import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt} from "react-icons/fa"
 import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
+import { Tooltip } from '@chakra-ui/react'
 
 function MovieDetail ( {data, addToWatchList, addToWatched} ) {
-
+    
     const api = useApi()
     const { imageProps } = api
+    const auth = useAuth()
+    const isLogged = auth.isLogged
 
     const bgStyles = {
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${imageProps.baseURL + 'w780' + data.backdrop_path})`
@@ -69,7 +73,7 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
     const handleAddToWatched = () => {
         addToWatched({ id: data.id, posterPath: posterPath, name: data.name || data.title })
     }
-    
+
     return (
         <section className="movie-detail">
             <article className="poster" style={bgStyles}>
@@ -95,8 +99,19 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
                         <p>Valoración de los usuarios</p>
                     </div>
                     <div className="add-buttons">
-                        <button onClick={handleAddToWatched}><FaEye /></button>
-                        <button onClick={handleAddToWatchList}><FaBookmark /></button>
+                        {
+                            isLogged ?
+                            <div className="logged-buttons">
+                                <Tooltip hasArrow label='Agregar a películas vistas' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                    <button onClick={handleAddToWatched}><FaEye /></button>
+                                </Tooltip>
+                                <Tooltip hasArrow label='Agregar a películas por ver' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                    <button onClick={handleAddToWatchList}><FaBookmark /></button>
+                                </Tooltip>
+                            </div> 
+                            :
+                            <p>Inicia sesión para guardar</p>
+                        }
                     </div>
                     <p>{data.overview}</p>
                     <p className='companies'>{data.production_companies.map((companie, index) => (

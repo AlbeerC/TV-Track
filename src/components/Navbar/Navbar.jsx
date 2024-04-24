@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './Navbar.scss'
 import { TfiMenu } from "react-icons/tfi"
 import { IoMdCloseCircleOutline } from "react-icons/io"
+import { FaUserAlt } from "react-icons/fa";
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import ModalMobile from '../ModalMobile/ModalMobile'
@@ -47,7 +48,7 @@ function Navbar () {
                 {
                     isLogged ? 
                     <div className='logged'>
-                        <Link to='/profile'><p>{user}</p></Link>
+                        <Link to='/profile'><p><FaUserAlt /> Mi perfil</p></Link>
                     </div>
                     :
                     <div className="not-logged">
@@ -66,7 +67,7 @@ function Navbar () {
                     closeModal={closeModal}
                 />
             )}
-            {openLoginModal ? <Login handleLoginModal={handleLoginModal}/> : null}
+            {openLoginModal ? <Login handleLoginModal={handleLoginModal} /> : null}
             {openRegisterModal ? <Register handleRegisterModal={handleRegisterModal} /> : null }
         </header>
     )

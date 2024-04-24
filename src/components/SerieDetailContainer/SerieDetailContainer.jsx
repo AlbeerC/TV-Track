@@ -5,6 +5,7 @@ import SerieDetail from "../SerieDetail/SerieDetail"
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config'
 import { useAuth } from "../../context/AuthContext"
+import { useToast } from "@chakra-ui/react"
 
 function SerieDetailContainer () {
 
@@ -13,6 +14,7 @@ function SerieDetailContainer () {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
     const auth = useAuth()
+    const toast = useToast()    // Library for notifications
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=es`)
@@ -37,7 +39,14 @@ function SerieDetailContainer () {
 
             const docSnapshot = await getDoc(serieRef)
             if (docSnapshot.exists()) {
-                console.log('The serie is already on the list')
+                // Show notification if the serie is already on the list
+                toast({
+                    title: 'Esta serie ya está en la lista',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                })
                 return
             }
 
@@ -46,10 +55,24 @@ function SerieDetailContainer () {
                 posterPath: serie.posterPath,
                 serie: serie.name
             })
-            // Mostrar notificacion si se agregó
-            console.log("serie added to watchlist")
+            // Show notification if the serie added successfully
+            toast({
+                title: 'Serie agregada correctamente',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         } catch (error) {
-            console.error("Error adding serie to watchlist", error)
+            // Show notification if there was an error
+            toast({
+                title: 'Error al agregar la serie',
+                description: error,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         }
     }
 
@@ -62,7 +85,14 @@ function SerieDetailContainer () {
 
             const docSnapshot = await getDoc(serieRef)
             if (docSnapshot.exists()) {
-                console.log('The serie is already on the list')
+                // Show notification if the serie is already on the list
+                toast({
+                    title: 'Esta serie ya está en la lista',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                })
                 return
             }
 
@@ -71,10 +101,24 @@ function SerieDetailContainer () {
                 posterPath: serie.posterPath,
                 name: serie.name
             })
-            // Mostrar notificacion si se agregó
-            console.log("serie added to watched list")
+            // Show notification if the serie added successfully
+            toast({
+                title: 'Serie agregada correctamente',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         } catch (error) {
-            console.error("Error adding serie to watched list", error)
+            // Show notification if there was an error
+            toast({
+                title: 'Error al agregar la serie',
+                description: error,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         }
     }
 

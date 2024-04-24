@@ -42,6 +42,16 @@ header {
                 font-size: 2rem;
                 font-weight: bold;
                 cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+
+                svg {
+                    border: 1px solid #ffffff;
+                    padding: .5rem;
+                    font-size: 3rem;
+                    border-radius: 50%;
+                }
             }
 
             button {

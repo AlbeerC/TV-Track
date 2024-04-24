@@ -15,8 +15,17 @@ function Dashboard () {
 
     return (
         <section className="dashboard">
-            <h2>{user}</h2>
-            {isLogged && <button onClick={handleLogout}>Cerrar sesión</button>}
+            {
+            isLogged ? 
+                <article className='dashboard-logged'>
+                    <h2>{user}</h2>
+                    <button onClick={handleLogout}>Cerrar sesión</button>
+                </article>
+                :
+                <article className='dashboard-not-logged'>
+                    <p>Tienes que iniciar sesión o registrarte para ver tu perfil</p>
+                </article>
+            }
         </section>
     )
 }

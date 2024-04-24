@@ -1,5 +1,4 @@
 import { FaGoogle } from "react-icons/fa"
-import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react'
 
@@ -9,23 +8,16 @@ function Register ( {handleRegisterModal} ) {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [redirect, setRedirect] = useState(false)
 
     const handleRegister = async (e) => {
         e.preventDefault()
         await auth.register(email, password)
-
-        setRedirect(true)
+        handleRegisterModal()                   
     }
 
     const handleRegisterWithGoogle = async () => {
         await auth.loginWithGoogle()
-
-        setRedirect(true)
-    }
-
-    if (!auth.error && redirect) {
-        return <Navigate to='/'/>
+        handleRegisterModal()
     }
 
     return (

@@ -5,6 +5,7 @@ import MovieDetail from "../MovieDetail/MovieDetail"
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config'
 import { useAuth } from "../../context/AuthContext"
+import { useToast } from '@chakra-ui/react'
 
 function MovieDetailContainer () {
 
@@ -13,6 +14,8 @@ function MovieDetailContainer () {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
     const auth = useAuth()
+    const toast = useToast()    // Library for notifications
+    const userId = auth.getUserId() // Get userID for add functions
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es`)
@@ -26,8 +29,6 @@ function MovieDetailContainer () {
     if (loading) { return <Loading /> }
 
 
-    const userId = auth.getUserId()
-
     const addToWatchList = async (userId, movie) => {
         try {
             const userRef = doc(db, 'users', userId)
@@ -37,7 +38,14 @@ function MovieDetailContainer () {
 
             const docSnapshot = await getDoc(movieRef)
             if (docSnapshot.exists()) {
-                console.log('The movie is already on the list')
+                // Show notification if the movie is already on the list
+                toast({
+                    title: 'Esta película ya está en la lista',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                })
                 return
             }
 
@@ -46,10 +54,24 @@ function MovieDetailContainer () {
                 posterPath: movie.posterPath,
                 movie: movie.name
             })
-            // Mostrar notificacion si se agregó
-            console.log("Movie added to watchlist")
+            // Show notification if the movie added successfully
+            toast({
+                title: 'Película agregada correctamente',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         } catch (error) {
-            console.error("Error adding movie to watchlist", error)
+            // Show notification if there was an error
+            toast({
+                title: 'Error al agregar la película',
+                description: error,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         }
     }
 
@@ -62,7 +84,14 @@ function MovieDetailContainer () {
 
             const docSnapshot = await getDoc(movieRef)
             if (docSnapshot.exists()) {
-                console.log('The movie is already on the list')
+                // Show notification if the movie is already on the list
+                toast({
+                    title: 'Esta película ya está en la lista',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                })
                 return
             }
 
@@ -71,10 +100,24 @@ function MovieDetailContainer () {
                 posterPath: movie.posterPath,
                 name: movie.name
             })
-            // Mostrar notificacion si se agregó
-            console.log("Movie added to watched list")
+            // Show notification if the movie added successfully
+            toast({
+                title: 'Película agregada correctamente',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         } catch (error) {
-            console.error("Error adding movie to watched list", error)
+            // Show notification if there was an error
+            toast({
+                title: 'Error al agregar la película',
+                description: error,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            })
         }
     }
 

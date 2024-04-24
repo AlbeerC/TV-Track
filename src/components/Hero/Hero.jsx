@@ -1,6 +1,5 @@
 import './Hero.scss'
 import { FaCheckCircle } from "react-icons/fa"
-import { Link } from 'react-router-dom'
 
 function Hero () {
 

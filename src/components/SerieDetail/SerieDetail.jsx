@@ -1,12 +1,16 @@
 import { useApi } from '../../context/ApiContext'
+import { useAuth } from '../../context/AuthContext'
 import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt} from "react-icons/fa"
 import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
+import { Tooltip } from '@chakra-ui/react'
 
 function SerieDetail ( {data, addToWatchList, addToWatched} ) {
 
     const api = useApi()
     const { imageProps } = api
+    const auth = useAuth()
+    const isLogged = auth.isLogged
     
     const validateData = () => {
         const importantProperties = ['name', 'first_air_date', 'genres', 'vote_average', 'overview', 'production_companies', 'poster_path']
@@ -91,8 +95,19 @@ function SerieDetail ( {data, addToWatchList, addToWatched} ) {
                         <p>Valoración de los usuarios</p>
                     </div>
                     <div className="add-buttons">
-                        <button onClick={handleAddToWatched}><FaEye /></button>
-                        <button onClick={handleAddToWatchList}><FaBookmark /></button>
+                        {
+                            isLogged ?
+                            <div className="logged-buttons">
+                                <Tooltip hasArrow label='Agregar a series vistas' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                    <button onClick={handleAddToWatched}><FaEye /></button>
+                                </Tooltip>
+                                <Tooltip hasArrow label='Agregar a series por ver' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                    <button onClick={handleAddToWatchList}><FaBookmark /></button>
+                                </Tooltip>
+                            </div> 
+                            :
+                            <p>Inicia sesión para guardar</p>
+                        }
                     </div>
                     <p>{data.overview}</p>
                     <p className='companies'>{data.production_companies.map((companie, index) => (

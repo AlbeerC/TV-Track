@@ -1,6 +1,5 @@
 import './Login.scss'
 import { FaGoogle } from "react-icons/fa"
-import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react'
 
@@ -10,24 +9,19 @@ function Login ( {handleLoginModal} ) {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [redirect, setRedirect] = useState(false)
 
     const handleLogin = async (e) => {
         e.preventDefault()
         await auth.login(email, password)
-
-        setRedirect(true)
+        handleLoginModal()
     }
 
     const handleLoginWithGoogle = async () => {
         await auth.loginWithGoogle()
-        
-        setRedirect(true)
+        handleLoginModal()
     }
 
-    if (!auth.error && redirect) {
-        return <Navigate to='/'/>
-    }
+
 
     return (
         <section className="modal-overlay">
