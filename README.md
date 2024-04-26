@@ -1,8 +1,17 @@
-# React + Vite
+# TV Track
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación que permite a los usuarios llevar un registro de películas y series.
+Proyecto realizado para [Hackaton del dev](https://www.lahackathondeldev.com/)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Características y funcionalidades
+
+ - Inicio de sesión y registro usando el servicio Authentication de ([Firebase](https://developer.themoviedb.org/docs/getting-started))
+ - Datos de cientos de películas y series traídos de la api ([TMDB](https://developer.themoviedb.org/docs/getting-started))
+ - Front-end desarrollado con ([React JS](https://es.react.dev/))
+ - Librerías de componentes e iconos utilizados ([React Icons](https://react-icons.github.io/react-icons/)) y ([Chakra UI](https://v2.chakra-ui.com/))
+
+## Autor
+
+- [Alberto Caminos](https://albertocaminos.vercel.app/)
+

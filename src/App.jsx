@@ -22,10 +22,10 @@ function App() {
         <Routes>
           <Route path='/' element={<MainLayout /> } />
           <Route path='/profile' element={<DashboardContainer /> } />
-          <Route path='*' element={<NotFound /> } />
           <Route path='/detail/movie/:id' element={ <MovieDetailContainer /> } />
           <Route path='/detail/serie/:id' element={ <SerieDetailContainer /> } />
           <Route path='/search/:searchTerm' element={<SearchResults />}/>
+          <Route path='*' element={<NotFound /> } />
         </Routes>
         <Footer />
       </BrowserRouter>

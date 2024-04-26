@@ -30,7 +30,9 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                             <div className="map">
                                 {watchList.map((item) => (
                                     <div className="item" key={item.id}>
-                                        <Link><img src={item.posterPath} alt={item.name || item.title} /></Link>
+                                        <Link to={item.title ? `/detail/movie/${item.id}` : `/detail/serie/${item.id}`}>
+                                            <img src={item.posterPath} alt={item.name || item.title} />
+                                        </Link>
                                         <button onClick={() => {
                                             const docNamePrefix = item.title ? 'movie' : 'serie'
                                             handleDeleteFromWatchlist(`${docNamePrefix}_${item.id}`)}}>X
@@ -45,7 +47,9 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                             <div className="map">
                                 {watched.map((item) => (
                                     <div className="item" key={item.id}>
-                                        <Link><img src={item.posterPath} alt={item.name || item.title} /></Link>
+                                        <Link to={item.title ? `/detail/movie/${item.id}` : `/detail/serie/${item.id}`}>
+                                            <img src={item.posterPath} alt={item.name || item.title} />
+                                        </Link>
                                         <button onClick={() => {
                                             const docNamePrefix = item.title ? 'movie' : 'serie'
                                             handleDeleteFromWatched(`${docNamePrefix}_${item.id}`)}}>X
