@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 // Components
 import Navbar from './components/Navbar/Navbar'
 import MainLayout from './components/MainLayout/MainLayout'
-import Dashboard from './components/Dashboard/Dashboard'
+import DashboardContainer from './components/DashboardContainer/DashboardContainer'
 import Footer from './components/Footer/Footer'
 import NotFound from './components/NotFound/NotFound'
 import MovieDetailContainer from './components/MovieDetailContainer/MovieDetailContainer'
@@ -21,7 +21,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<MainLayout /> } />
-          <Route path='/profile' element={<Dashboard /> } />
+          <Route path='/profile' element={<DashboardContainer /> } />
           <Route path='*' element={<NotFound /> } />
           <Route path='/detail/movie/:id' element={ <MovieDetailContainer /> } />
           <Route path='/detail/serie/:id' element={ <SerieDetailContainer /> } />

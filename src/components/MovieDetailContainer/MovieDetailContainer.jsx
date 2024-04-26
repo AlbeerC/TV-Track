@@ -29,6 +29,7 @@ function MovieDetailContainer () {
     if (loading) { return <Loading /> }
 
 
+    // Add movie to watchlist
     const addToWatchList = async (userId, movie) => {
         try {
             const userRef = doc(db, 'users', userId)
@@ -42,7 +43,7 @@ function MovieDetailContainer () {
                 toast({
                     title: 'Esta película ya está en la lista',
                     status: 'error',
-                    duration: 3000,
+                    duration: 2000,
                     isClosable: true,
                     position: 'top',
                 })
@@ -52,13 +53,13 @@ function MovieDetailContainer () {
             await setDoc(movieRef, {
                 id: movie.id,
                 posterPath: movie.posterPath,
-                movie: movie.name
+                title: movie.title,
             })
             // Show notification if the movie added successfully
             toast({
                 title: 'Película agregada correctamente',
                 status: 'success',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
@@ -68,13 +69,14 @@ function MovieDetailContainer () {
                 title: 'Error al agregar la película',
                 description: error,
                 status: 'error',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
         }
     }
 
+    // Add movie to watched
     const addToWatched = async (userId, movie) => {
         try {
             const userRef = doc(db, 'users', userId)
@@ -88,7 +90,7 @@ function MovieDetailContainer () {
                 toast({
                     title: 'Esta película ya está en la lista',
                     status: 'error',
-                    duration: 3000,
+                    duration: 2000,
                     isClosable: true,
                     position: 'top',
                 })
@@ -98,13 +100,13 @@ function MovieDetailContainer () {
             await setDoc(movieRef, {
                 id: movie.id,
                 posterPath: movie.posterPath,
-                name: movie.name
+                title: movie.title
             })
             // Show notification if the movie added successfully
             toast({
                 title: 'Película agregada correctamente',
                 status: 'success',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
@@ -114,7 +116,7 @@ function MovieDetailContainer () {
                 title: 'Error al agregar la película',
                 description: error,
                 status: 'error',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })

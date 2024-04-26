@@ -43,7 +43,7 @@ function SerieDetailContainer () {
                 toast({
                     title: 'Esta serie ya está en la lista',
                     status: 'error',
-                    duration: 3000,
+                    duration: 2000,
                     isClosable: true,
                     position: 'top',
                 })
@@ -53,13 +53,13 @@ function SerieDetailContainer () {
             await setDoc(serieRef, {
                 id: serie.id,
                 posterPath: serie.posterPath,
-                serie: serie.name
+                name: serie.name
             })
             // Show notification if the serie added successfully
             toast({
                 title: 'Serie agregada correctamente',
                 status: 'success',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
@@ -69,7 +69,7 @@ function SerieDetailContainer () {
                 title: 'Error al agregar la serie',
                 description: error,
                 status: 'error',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
@@ -89,7 +89,7 @@ function SerieDetailContainer () {
                 toast({
                     title: 'Esta serie ya está en la lista',
                     status: 'error',
-                    duration: 3000,
+                    duration: 2000,
                     isClosable: true,
                     position: 'top',
                 })
@@ -105,7 +105,7 @@ function SerieDetailContainer () {
             toast({
                 title: 'Serie agregada correctamente',
                 status: 'success',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })
@@ -115,7 +115,7 @@ function SerieDetailContainer () {
                 title: 'Error al agregar la serie',
                 description: error,
                 status: 'error',
-                duration: 3000,
+                duration: 2000,
                 isClosable: true,
                 position: 'top',
             })

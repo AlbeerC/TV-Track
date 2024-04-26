@@ -1,0 +1,71 @@
+@import '../../scss/variables';
+
+.dashboard {
+    min-height: 90vh;
+
+    .dashboard-logged {
+
+        .logout {
+            display: block;
+            margin-left: auto;
+        }
+
+        .watch-list, .watched {
+            margin: 5rem 2rem;
+
+            @include responsive(768) {
+                margin: 5rem 1rem;
+            }
+
+            h2 {
+                font-size: 2.5rem;
+            }
+
+            .map {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 2rem;
+
+                @include responsive(768) {
+                    gap: 1rem;
+                }
+
+                @media (max-width: 400px) {
+                    justify-content: center;
+                } 
+
+                .item {
+                    position: relative;
+
+                    a img {
+                        width: 12rem;
+                        height: auto;
+                    }
+    
+                    button {
+                        background-color: #000000;
+                        color: $mainColor;
+                        padding: .25rem .5rem;
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .dashboard-not-logged {
+        
+        p {
+            text-align: center;
+            margin-top: 5rem;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+    }
+}

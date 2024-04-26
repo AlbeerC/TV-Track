@@ -14,7 +14,7 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
     const isLogged = auth.isLogged
 
     const bgStyles = {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${imageProps.baseURL + 'w780' + data.backdrop_path})`
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${imageProps.baseURL + imageProps.posterSize + data.backdrop_path})`
     }
 
     const formatDuration = (runtime) => {
@@ -67,11 +67,11 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
     const posterPath = imageProps.baseURL +imageProps.posterSize + data.poster_path
 
     const handleAddToWatchList = () => {
-        addToWatchList({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+        addToWatchList({ id: data.id, posterPath: posterPath, title: data.title })
     }
 
     const handleAddToWatched = () => {
-        addToWatched({ id: data.id, posterPath: posterPath, name: data.name || data.title })
+        addToWatched({ id: data.id, posterPath: posterPath, title: data.title })
     }
 
     return (

@@ -2,13 +2,14 @@ import { useState } from 'react'
 import './Navbar.scss'
 import { TfiMenu } from "react-icons/tfi"
 import { IoMdCloseCircleOutline } from "react-icons/io"
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa"
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import ModalMobile from '../ModalMobile/ModalMobile'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
+import AlertLogout from '../AlertLogout/AlertLogout'
 
 function Navbar () {
 
@@ -48,7 +49,8 @@ function Navbar () {
                 {
                     isLogged ? 
                     <div className='logged'>
-                        <Link to='/profile'><p><FaUserAlt /> Mi perfil</p></Link>
+                        <Link to='/profile'><p><FaUserAlt />{user}</p></Link>
+                        <AlertLogout />
                     </div>
                     :
                     <div className="not-logged">

@@ -107,9 +107,6 @@ function AuthProvider ( {children} ) {
             const userId = getUserId()
             const userRef = doc(db, "users", userId)
 
-            await setDoc(doc(userRef, 'watchlist', userId), {})
-            await setDoc(doc(userRef, 'watched', userId), {})    
-
             await setDoc(userRef, {
                 email: user.email
             })

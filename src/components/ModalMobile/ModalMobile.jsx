@@ -2,6 +2,7 @@ import './ModalMobile.scss'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
+import AlertLogout from '../AlertLogout/AlertLogout'
 
 function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal, closeModal}) {
 
@@ -11,10 +12,6 @@ function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal,
     const user = getUser ? getUser.displayName || auth.cutDomainFromEmail(getUser?.email) : null
     const isLogged = auth.isLogged
     const navigate = useNavigate()
-
-    const handleLogout = () => {
-        auth.logout()
-    }
 
     const goToProfile = () => {
         navigate('/profile')
@@ -28,7 +25,7 @@ function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal,
                     <div className="modal-logged">
                         <h3>{user}</h3>
                         <button onClick={goToProfile} to='/profile'>Ir a mi perfil</button>
-                        <button onClick={handleLogout}>Cerrar sesión</button>
+                        <AlertLogout />
                         <SearchBar closeModal={closeModal}/>
                     </div>
 

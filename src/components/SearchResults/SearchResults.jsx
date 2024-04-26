@@ -30,7 +30,7 @@ function SearchResults () {
                             <img
                                 src={result.poster_path === null ? 
                                     "https://images.squarespace-cdn.com/content/v1/5a79de08aeb625f12ad4f85a/1527015265032-KYY1AQ4NCW6NB7BK1NDH/placeholder-image-vertical.png" : 
-                                    `https://image.tmdb.org/t/p/w200/${result.poster_path}`}
+                                    `https://image.tmdb.org/t/p/original/${result.poster_path}`}
                                 alt={result.name || result.title} 
                             />
                         </Link>
