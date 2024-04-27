@@ -3,6 +3,7 @@
 .search-results {
     padding: 2rem;
     min-height: 90vh;
+    color: $white;
     
     h2 {
         font-size: 2.5rem;
@@ -50,10 +51,20 @@
             h3, p {
                 font-size: 1.5rem;
                 max-width: 20rem;
+                font-family: $textFont;
+                letter-spacing: normal;
 
                 @include responsive(768) {
                     max-width: 15rem;
                     font-size: 1.3rem;
+                }
+            }
+
+            p {
+                font-size: 1.4rem;
+
+                @include responsive(768) {
+                    font-size: 1.2rem;
                 }
             }
         }

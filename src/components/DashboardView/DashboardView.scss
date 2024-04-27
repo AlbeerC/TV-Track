@@ -2,6 +2,7 @@
 
 .dashboard {
     min-height: 90vh;
+    color: #ffffff;
 
     .dashboard-logged {
 
@@ -34,7 +35,15 @@
 
                 @media (max-width: 400px) {
                     justify-content: center;
-                } 
+                }
+                
+                .empty-list {
+
+                    a {
+                        color: $mainColor;
+                        font-weight: bold;
+                    }
+                }
 
                 .item {
                     position: relative;

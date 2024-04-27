@@ -1,7 +1,8 @@
 import './DashboardView.scss'
 import { Link } from 'react-router-dom'
+import Loading from '../Loading/Loading'
 
-function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, deleteFromWatched } ) {
+function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, deleteFromWatched, loading } ) {
 
     const handleDeleteFromWatchlist = async (movieDocName) => {
         try {
@@ -28,6 +29,10 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                         <div className="watch-list">
                             <h2>Ver próximamente:</h2>
                             <div className="map">
+                                {loading && <Loading />}
+                                {watchList.length === 0  && !loading ? 
+                                    <p className='empty-list'>La lista está vacía. <Link to='/'>Descrubrir</Link></p> 
+                                : null}
                                 {watchList.map((item) => (
                                     <div className="item" key={item.id}>
                                         <Link to={item.title ? `/detail/movie/${item.id}` : `/detail/serie/${item.id}`}>
@@ -45,6 +50,10 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                         <div className="watched">
                             <h2>Visto:</h2>
                             <div className="map">
+                                {loading && <Loading />}
+                                {watched.length === 0  && !loading ? 
+                                    <p className='empty-list'>La lista está vacía. <Link to='/'>Descrubrir</Link></p> 
+                                : null}
                                 {watched.map((item) => (
                                     <div className="item" key={item.id}>
                                         <Link to={item.title ? `/detail/movie/${item.id}` : `/detail/serie/${item.id}`}>

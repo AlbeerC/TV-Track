@@ -3,6 +3,14 @@ import { FaCheckCircle } from "react-icons/fa"
 
 function Hero () {
 
+    const scrollDown = () => {
+        if (window.innerWidth >= 768) {
+            window.scrollBy(0, 610)
+        } else {
+            window.scrollBy(0, 810)
+        }
+    }
+
     return (
         <section className="hero">
             <article>
@@ -12,7 +20,7 @@ function Hero () {
                     <li>-Brinda opiniones y comentarios <FaCheckCircle /></li>
                     <li>-Descubre qué puedes ver a continuación <FaCheckCircle /></li>
                 </ul>
-                <button>Descubrir</button>
+                <button onClick={scrollDown}>Descubrir</button>
             </article>
         </section>
     )

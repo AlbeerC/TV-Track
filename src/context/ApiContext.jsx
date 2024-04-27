@@ -39,7 +39,7 @@ function ApiProvider({ children }) {
   
   const imageProps = {
     baseURL: "https://image.tmdb.org/t/p/",
-    posterSize: "original",
+    posterSize: "w342",
   }
 
   return (

@@ -13,8 +13,9 @@ function Loading () {
             <Spinner
                 thickness='4px'
                 speed='1s'
-                emptyColor='gray.200'
+                emptyColor='#a40990'
                 size='xl'
+                color='#ffffff'
             />
         </Stack>
     )

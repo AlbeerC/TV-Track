@@ -19,6 +19,9 @@ function DashboardContainer () {
     const isLogged = auth.isLogged
     const userId = auth.getUserId()
 
+    const [updateFlag, setUpdateFlag] = useState(false)
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -29,11 +32,13 @@ function DashboardContainer () {
                 setWatched(watchedData)
             } catch (error) {
                 console.error('Error', error)
+            } finally {
+                setLoading(false)
             }
         }
 
         fetchData()
-    }, [userId, watchList, watched])
+    }, [userId, updateFlag])
 
 
     const deleteFromWatchlist = async (movieDocName) => {
@@ -43,8 +48,9 @@ function DashboardContainer () {
             const movieRef = doc(watchlistRef, movieDocName)
     
             await deleteDoc(movieRef)
+            setUpdateFlag(prevFlag => !prevFlag)
     
-            // Mostrar notificación si la película se eliminó correctamente
+            // Show notification if movie deleted successfully
             toast({
                 title: 'Eliminada correctamente',
                 status: 'success',
@@ -53,7 +59,7 @@ function DashboardContainer () {
                 position: 'top',
             })
         } catch (error) {
-            // Mostrar notificación si hubo un error
+            // Show notification if there was an error
             toast({
                 title: 'Error al eliminar',
                 description: error,
@@ -72,8 +78,9 @@ function DashboardContainer () {
             const movieRef = doc(watchedRef, movieDocName)
     
             await deleteDoc(movieRef)
+            setUpdateFlag(prevFlag => !prevFlag)
     
-            // Mostrar notificación si la película se eliminó correctamente
+            // Show notification if movie deleted successfully
             toast({
                 title: 'Eliminada correctamente',
                 status: 'success',
@@ -82,7 +89,7 @@ function DashboardContainer () {
                 position: 'top',
             })
         } catch (error) {
-            // Mostrar notificación si hubo un error
+            // Show notification if there was an error
             toast({
                 title: 'Error al eliminar',
                 description: error,
@@ -101,6 +108,7 @@ function DashboardContainer () {
             watched={watched}
             deleteFromWatchlist={deleteFromWatchlist}
             deleteFromWatched={deleteFromWatched}
+            loading={loading}
         />
     )
 }

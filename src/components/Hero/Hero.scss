@@ -38,8 +38,8 @@
         button {
             margin: 0 auto;
             margin-top: 2rem;
-            background-color: $mainColor;
-            color: #ffffff;
+            background-color: transparent;
+            color: $mainColor;
             border-radius: 1rem;
             font-weight: bold;
             text-transform: uppercase;
@@ -48,12 +48,11 @@
             font-family: $textFont;
             font-size: 2.3rem;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 2px solid $mainColor;
+            transition: all ease 500ms;
 
             &:hover {
-                background-color: transparent;
-                color: $mainColor;
-                border: 2px solid $mainColor;
+                transform: scale(1.05);
             }
         }
     }

@@ -1,5 +1,5 @@
 import { db } from "./config"
-import { doc, collection, getDocs, deleteDoc } from "firebase/firestore"
+import { doc, collection, getDocs } from "firebase/firestore"
 
 // Get movies and tv series from watchlist of firestore
 const getWatchlist = async (userId) => {

@@ -23,7 +23,7 @@ function SerieDetail ( {data, addToWatchList, addToWatched} ) {
     }
 
     const bgStyles = {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url(${imageProps.baseURL + imageProps.posterSize + data.backdrop_path})`
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(${imageProps.baseURL + 'original' + data.backdrop_path})`
     }
 
     const formatDate = (date) => {
@@ -98,10 +98,10 @@ function SerieDetail ( {data, addToWatchList, addToWatched} ) {
                         {
                             isLogged ?
                             <div className="logged-buttons">
-                                <Tooltip hasArrow label='Agregar a series vistas' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                <Tooltip hasArrow label='Agregar a series vistas' fontSize='xl' color='#a40990' bg='#000000' fontWeight='bold'>
                                     <button onClick={handleAddToWatched}><FaEye /></button>
                                 </Tooltip>
-                                <Tooltip hasArrow label='Agregar a series por ver' fontSize='xl' color='#7FB335' bg='#000000' fontWeight='bold'>
+                                <Tooltip hasArrow label='Agregar a series por ver' fontSize='xl' color='#a40990' bg='#000000' fontWeight='bold'>
                                     <button onClick={handleAddToWatchList}><FaBookmark /></button>
                                 </Tooltip>
                             </div> 

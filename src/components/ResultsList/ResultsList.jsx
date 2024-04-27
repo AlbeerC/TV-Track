@@ -26,7 +26,7 @@ function ResultList({ loadMore, items }) {
                             <p>{prod.release_date && prod.release_date.slice(0, 4) || 
                             (prod.first_air_date && prod.first_air_date.slice(0, 4))}</p>
                             <span>-</span>
-                            <p>{prod.vote_average.toString().slice(0, 3)}/10</p>
+                            <p>{prod.vote_average?.toString().slice(0, 3)}/10</p>
                         </div>
                     </div>
                 ))}

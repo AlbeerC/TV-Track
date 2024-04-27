@@ -2,6 +2,7 @@
 
 .results-list {
     padding: 2rem;
+    color: #ffffff;
 
     h2 {
         font-size: 4rem;
@@ -29,7 +30,6 @@
         }
 
         .result {
-            font-family: Arial, Helvetica, sans-serif;
 
             a {
                 
@@ -48,6 +48,8 @@
             h3, p {
                 font-size: 1.5rem;
                 max-width: 20rem;
+                font-family: $textFont;
+                letter-spacing: normal;
 
                 @include responsive(768) {
                     max-width: 15rem;
