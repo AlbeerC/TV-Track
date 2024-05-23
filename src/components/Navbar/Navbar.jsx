@@ -40,6 +40,14 @@ function Navbar () {
         setOpenMenu(false)
         document.body.classList.toggle('modal-opened')
     }
+    
+    if (isLogged && openLoginModal) {
+        setOpenLoginModal(false)
+    }
+
+    if (isLogged && openRegisterModal) {
+        setOpenRegisterModal(false)
+    }
 
     return (
         <header>

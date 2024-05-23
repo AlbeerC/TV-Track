@@ -11,13 +11,11 @@ function Register ( {handleRegisterModal} ) {
 
     const handleRegister = async (e) => {
         e.preventDefault()
-        await auth.register(email, password)
-        handleRegisterModal()                   
+        await auth.register(email, password)              
     }
 
     const handleRegisterWithGoogle = async () => {
         await auth.loginWithGoogle()
-        handleRegisterModal()
     }
 
     return (

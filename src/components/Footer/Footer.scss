@@ -3,9 +3,6 @@
 footer {
     color: #ffffff;
     padding: 1rem 7rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     border-top: 2px solid $mainColor;
 
     @include responsive(768) {
@@ -15,8 +12,12 @@ footer {
         padding: 1rem;
     }
 
-    a {
-        color: $mainColor;
-        font-weight: bold;
+    p {
+        text-align: center;
+
+        a {
+            color: $mainColor;
+            font-weight: bold;
+        }
     }
 }

@@ -6,6 +6,32 @@
 
     .dashboard-logged {
 
+        .length {
+            margin: 5rem 1rem;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 3rem;
+
+            p {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                width: 15rem;
+                padding:  2rem 1rem;
+                font-family: $textFont;
+                border: 2px solid $mainColor;
+
+                span {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    color: $mainColor;
+                }
+            }
+        }
+
         .logout {
             display: block;
             margin-left: auto;
@@ -23,18 +49,10 @@
             }
 
             .map {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 2rem;
 
-                @include responsive(768) {
-                    gap: 1rem;
-                }
-
-                @media (max-width: 400px) {
-                    justify-content: center;
+                h3 {
+                    padding-top: 3rem;
+                    font-size: 2rem;
                 }
                 
                 .empty-list {
@@ -42,6 +60,22 @@
                     a {
                         color: $mainColor;
                         font-weight: bold;
+                    }
+                }
+
+                .mapped {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 2rem;
+    
+                    @include responsive(768) {
+                        gap: 1rem;
+                    }
+    
+                    @media (max-width: 400px) {
+                        justify-content: center;
                     }
                 }
 

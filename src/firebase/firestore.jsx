@@ -37,4 +37,12 @@ const getWatched = async (userId) => {
     }
 }
 
+const getWatchlistMovies = () => {
+
+}
+
+const getWatchListSeries = () => {
+
+}
+
 export { getWatchlist, getWatched }

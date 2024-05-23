@@ -13,12 +13,11 @@ function Login ( {handleLoginModal} ) {
     const handleLogin = async (e) => {
         e.preventDefault()
         await auth.login(email, password)
-        handleLoginModal()
+
     }
 
     const handleLoginWithGoogle = async () => {
         await auth.loginWithGoogle()
-        handleLoginModal()
     }
 
 
