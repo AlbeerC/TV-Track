@@ -27,7 +27,7 @@ function SearchBar ( {closeModal} ) {
                 type="text" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder='Buscar película o serie'
+                placeholder='Buscar película'
                 onKeyDown={handleKeyPress}
             />
         </div>

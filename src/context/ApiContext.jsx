@@ -1,52 +1,70 @@
-import { createContext, useState, useEffect, useContext } from "react"
- 
+import { createContext, useContext, useState, useEffect } from "react"
+
 const ApiContext = createContext()
 
-function ApiProvider({ children }) {
-  const API_KEY = "59a8b9ea3a6d0f0d1d790d8bb5f36d94"
-  const [loading, setLoading] = useState(true)
-  const [page, setPage] = useState({ trendings: 1, movies: 1, series: 1 })
-  const [data, setData] = useState({trendings: [], movies: [], series: []})
+function ApiProvider ( {children} ) {
 
-  const callApi = async (endpoint, type) => {
-    setLoading(true)
-    try {
-      const response = await fetch(`${endpoint}&page=${page[type]}`)
-      const jsonData = await response.json()
-      setData((prevData) => ({
-        ...prevData,
-        [type]: page[type] === 1 ? jsonData.results : [...prevData[type], ...jsonData.results],
-      }))
-    } catch (error) {
-      console.error(`Error fetching ${type} data:`, error)
-    } finally {
-      setLoading(false)
+    const [movies, setMovies] = useState([])
+    const [movieDetails, setMovieDetails] = useState([])
+    const [searchMovie, setSearchMovie] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    const fetchMovies = async (endpoint, page) => {
+        setLoading(true)
+        setError(null)
+        try {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${endpoint}?language=es-MX&api_key=59a8b9ea3a6d0f0d1d790d8bb5f36d94&page=${page}`)
+            const result = await response.json()
+            setMovies(prevMovies => page === 1 ? result.results : [...prevMovies, ...result.results])
+        } catch (error){
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
     }
-  }
-  
-  useEffect(() => {
-    callApi(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&language=es`, "trendings")
-    callApi(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=es`, "movies")
-    callApi(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=es`, "series")
-  }, [page])
 
-  const loadMore = (type) => {
-    setPage((prevPage) => ({
-      ...prevPage,
-      [type]: prevPage[type] + 1,
-    }))
-  }
-  
-  const imageProps = {
-    baseURL: "https://image.tmdb.org/t/p/",
-    posterSize: "w342",
-  }
+    const fetchMovieDetails = async (id) => {
+        setLoading(true)
+        setError(null)
+        try {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-MX&api_key=59a8b9ea3a6d0f0d1d790d8bb5f36d94`)
+            const result = await response.json()
+            setMovieDetails(result)
+        } catch (error){
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
-  return (
-    <ApiContext.Provider value={{ data, imageProps, loadMore, loading }}>
-      {children}
-    </ApiContext.Provider>
-  )
+    const fetchSearchMovie = async (query) => {
+        setLoading(true)
+        setError(null)
+        try {
+            const response = await fetch(`https://api.themoviedb.org/3/search/multi?query=${query}&api_key=59a8b9ea3a6d0f0d1d790d8bb5f36d94&language=es-MX`)
+            const result = await response.json()
+            setSearchMovie(result.results.filter(movie => movie.media_type === "movie" && movie.poster_path))
+        } catch (error){
+            setError(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const getImageUrl = (url) => {
+        return `https://image.tmdb.org/t/p/w342${url}`
+    }
+
+    const getBackdropUrl = (url) => {
+        return `https://image.tmdb.org/t/p/original${url}`
+    }
+
+    return (
+        <ApiContext.Provider value={{movies, movieDetails, searchMovie, loading, error, fetchMovies, fetchMovieDetails, fetchSearchMovie, getImageUrl, getBackdropUrl}}>
+            {children}
+        </ApiContext.Provider>
+    )
 }
 
 export const useApi = () => useContext(ApiContext)

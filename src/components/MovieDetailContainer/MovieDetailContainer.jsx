@@ -6,24 +6,18 @@ import { collection, doc, setDoc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase/config'
 import { useAuth } from "../../context/AuthContext"
 import { useToast } from '@chakra-ui/react'
+import { useApi } from "../../context/ApiContext"
 
 function MovieDetailContainer () {
 
-    const API_KEY = "59a8b9ea3a6d0f0d1d790d8bb5f36d94"
     const { id } = useParams()
-    const [data, setData] = useState(null)
-    const [loading, setLoading] = useState(true)
     const auth = useAuth()
     const toast = useToast()    // Library for notifications
     const userId = auth.getUserId() // Get userID for add functions
+    const { loading, fetchMovieDetails, movieDetails } = useApi()
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es`)
-        .then((res) => res.json())
-        .then((data) => setData(data))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false))
-
+        fetchMovieDetails(id)
     }, [id])
 
     if (loading) { return <Loading /> }
@@ -34,7 +28,7 @@ function MovieDetailContainer () {
         try {
             const userRef = doc(db, 'users', userId)
             const watchlistRef = collection(userRef, 'watchlist')
-            const prefixedId = `movie_${movie.id}`
+            const prefixedId = `${movie.id}`
             const movieRef = doc(watchlistRef, prefixedId)
 
             const docSnapshot = await getDoc(movieRef)
@@ -81,7 +75,7 @@ function MovieDetailContainer () {
         try {
             const userRef = doc(db, 'users', userId)
             const watchedRef = collection(userRef, 'watched')
-            const prefixedId = `movie_${movie.id}`
+            const prefixedId = `${movie.id}`
             const movieRef = doc(watchedRef, prefixedId)
 
             const docSnapshot = await getDoc(movieRef)
@@ -100,7 +94,8 @@ function MovieDetailContainer () {
             await setDoc(movieRef, {
                 id: movie.id,
                 posterPath: movie.posterPath,
-                title: movie.title
+                title: movie.title,
+                runtime: movie.runtime
             })
             // Show notification if the movie added successfully
             toast({
@@ -126,7 +121,7 @@ function MovieDetailContainer () {
     return (
         <section className="details">
             <MovieDetail
-                data={data}
+                movie={movieDetails}
                 addToWatchList={(movie) => addToWatchList(userId, movie)}
                 addToWatched={(movie) => addToWatched(userId, movie)}
             />

@@ -6,15 +6,16 @@ import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
 import { Tooltip } from '@chakra-ui/react'
 
-function MovieDetail ( {data, addToWatchList, addToWatched} ) {
+function MovieDetail ( {addToWatchList, addToWatched, movie} ) {
     
     const api = useApi()
-    const { imageProps } = api
+    const { getImageUrl, getBackdropUrl, } = api
     const auth = useAuth()
     const isLogged = auth.isLogged
 
     const bgStyles = {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(${imageProps.baseURL + 'original' + data.backdrop_path})`
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), 
+        url(${getBackdropUrl(movie.backdrop_path)})`,
     }
 
     const formatDuration = (runtime) => {
@@ -31,12 +32,19 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
     }
 
     const formatDate = (date) => {
-        if (date === "") {
-            return
-        } else {
+        if (!date) {
+            return ''
+        }
+        try {
             const parsedDate = new Date(date)
-            const formattedDate = format(parsedDate, 'dd/MM/yyyy', { locale: esLocale })
-            return formattedDate
+            return parsedDate.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            })
+        } catch (error) {
+            console.error('Error formatting date', error)
+            return ''
         }
     }
 
@@ -64,14 +72,14 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
     }
 
     // Add to list
-    const posterPath = imageProps.baseURL + imageProps.posterSize + data.poster_path
+    const posterPath = getImageUrl(movie.poster_path)
 
     const handleAddToWatchList = () => {
-        addToWatchList({ id: data.id, posterPath: posterPath, title: data.title })
+        addToWatchList({ id: movie.id, posterPath: posterPath, title: movie.title  })
     }
 
     const handleAddToWatched = () => {
-        addToWatched({ id: data.id, posterPath: posterPath, title: data.title })
+        addToWatched({ id: movie.id, posterPath: posterPath, title: movie.title, runtime: movie.runtime })
     }
 
     return (
@@ -79,23 +87,19 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
             <article className="poster" style={bgStyles}>
                 <div className="image">
                     <img 
-                        src={`${imageProps.baseURL}${imageProps.posterSize}${data.poster_path}`} 
-                        alt={data.title || data.name} 
+                        src={getImageUrl(movie.poster_path)} 
+                        alt={movie.title} 
                     />
                 </div>
                 <div className="texts">
-                    <h2>{data.title} <span>({data.release_date && data.release_date.slice(0, 4)})</span></h2>
+                    <h2>{movie.title} <span>({movie.release_date && movie.release_date.slice(0, 4)})</span></h2>
                     <ul>
-                        <li>{formatDate(data.release_date)}</li>
-                        <li>{data.genres.map((genre, index) => (
-                            <span key={genre.id}> {genre.name}
-                                {index !== data.genres.length - 1 && ','}
-                            </span>))}
-                        </li>
-                        <li>{formatDuration(data.runtime)}</li>
+                        <li>{formatDate(movie.release_date)}</li>
+                        <li>{movie.genres?.map(genre => genre.name).join(', ')}</li>
+                        <li>{formatDuration(movie.runtime)}</li>
                     </ul>
-                    <h3>{data.tagline}</h3>
-                    <div className='icon-stars'>{renderStarIcons(data.vote_average)}
+                    <h3>{movie.tagline}</h3>
+                    <div className='icon-stars'>{renderStarIcons(movie.vote_average)}
                         <p>Valoración de los usuarios</p>
                     </div>
                     <div className="add-buttons">
@@ -113,12 +117,8 @@ function MovieDetail ( {data, addToWatchList, addToWatched} ) {
                             <p>Inicia sesión para guardar</p>
                         }
                     </div>
-                    <p>{data.overview}</p>
-                    <p className='companies'>{data.production_companies.map((companie, index) => (
-                        <span key={companie.id}>{companie.name}
-                            {index !== data.production_companies.length - 1 && ','}
-                        </span>
-                    ))}</p>
+                    <p>{movie.overview}</p>
+                    <p className='companies'>{movie.production_companies?.map(comp => comp.name).join(', ')}</p>
                 </div>
             </article>
         </section>

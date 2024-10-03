@@ -1,15 +1,16 @@
 import './FilterButtons.scss'
+import { Link } from 'react-router-dom'
 
-function FilterButtons ( {selectedTab, handleTabChange} ) {
+function FilterButtons ( {selectedEndpoint, handleFilterSelect} ) {
     
     return (
         <article className="filter-buttons">
-            <button className={selectedTab === "trendings" ? "active" : ""} 
-            onClick={() => handleTabChange("trendings")}>Tendencias</button>
-            <button className={selectedTab === "movies" ? "active" : ""} 
-            onClick={() => handleTabChange("movies")}>Películas</button>
-            <button className={selectedTab === "series" ? "active" : ""} 
-            onClick={() => handleTabChange("series")}>Series</button>
+            <button className={selectedEndpoint === "popular" ? "active" : ""} 
+            onClick={() => handleFilterSelect("popular")}>Tendencias</button>
+            <button className={selectedEndpoint === "top_rated" ? "active" : ""} 
+            onClick={() => handleFilterSelect("top_rated")}>Mejor valoradas</button>
+            <button className={selectedEndpoint === "upcoming" ? "active" : ""} 
+            onClick={() => handleFilterSelect("upcoming")}>Próximamente</button>
         </article>
     )
 }

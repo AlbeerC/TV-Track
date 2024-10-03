@@ -1,25 +1,30 @@
 import './DashboardView.scss'
 import { Link } from 'react-router-dom'
 import Loading from '../Loading/Loading'
+import { useEffect } from 'react'
 
 function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, deleteFromWatched, loading } ) {
-
-    const handleDeleteFromWatchlist = async (movieDocName) => {
-        try {
-            await deleteFromWatchlist(movieDocName)
-        } catch (error) {
-            console.error('Error al eliminar la película:', error)
-        }
-    }
-
-    const handleDeleteFromWatched = async (movieDocName) => {
-        try {
-            await deleteFromWatched(movieDocName)
-        } catch (error) {
-            console.error('Error al eliminar la película:', error)
-        }
-    }
     
+    const getTimeWatching = () => {
+        let minutes = 0
+        watched.forEach((movie) => {
+            minutes += movie.runtime
+        })
+
+        const hours = Math.floor(minutes / 60)
+        const remainingMinutes = minutes % 60
+
+        if (hours === 0) {
+            return `${remainingMinutes} min`
+        } else if (remainingMinutes === 0) {
+            return `${hours}hr`
+        } else {
+            return `${hours}hr ${remainingMinutes}min`
+        }
+    }
+
+    console.log(watched)
+    console.log(watchList)
 
     return (
         <section className="dashboard">
@@ -28,10 +33,14 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                     <article className='dashboard-logged'>
                         <div className="length">
                             <p>Películas vistas: 
-                                <span>{watched.filter((item) => item.title).length}</span>
+                                <span>
+                                    {loading ? "..." : watched.length}
+                                </span>
                             </p>
-                            <p>Series vistas: 
-                                <span>{watched.filter((item) => item.name).length}</span>
+                            <p>Tiempo visto: 
+                                <span>
+                                    {loading ? "..." : getTimeWatching()}
+                                </span>
                             </p>
                         </div>
                         <div className="watch-list">
@@ -42,31 +51,13 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                                     <p className='empty-list'>La lista está vacía. <Link to='/'>Descrubrir</Link></p> 
                                 : null}
                                 {/* Watchlist Movies */}
-                                <h3>Películas</h3>
                                 <div className="mapped">
-                                    {watchList.filter((item) => item.title).map((item) => (
+                                    {watchList.map((item) => (
                                         <div className="item" key={item.id}>
                                             <Link to={`/detail/movie/${item.id}`}>
                                                 <img src={item.posterPath} alt={item.title} />
                                             </Link>
-                                            <button onClick={() => {
-                                                const docNamePrefix = item.title ? 'movie' : 'serie'
-                                                handleDeleteFromWatchlist(`${docNamePrefix}_${item.id}`)}}>X
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                                {/* Watchlist series */}
-                                <h3>Series</h3>
-                                <div className="mapped">
-                                    {watchList.filter((item) => item.name).map((item) => (
-                                        <div className="item" key={item.id}>
-                                            <Link to={`/detail/serie/${item.id}`}>
-                                                <img src={item.posterPath} alt={item.name} />
-                                            </Link>
-                                            <button onClick={() => {
-                                                const docNamePrefix = item.title ? 'movie' : 'serie'
-                                                handleDeleteFromWatchlist(`${docNamePrefix}_${item.id}`)}}>X
+                                            <button onClick={() => deleteFromWatchlist(item.id)}>X
                                             </button>
                                         </div>
                                     ))}
@@ -82,31 +73,13 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                                     <p className='empty-list'>La lista está vacía. <Link to='/'>Descrubrir</Link></p> 
                                 : null}
                                 {/* Watched movies */}
-                                <h3>Películas</h3>
                                 <div className="mapped">
-                                    {watched.filter((item) => item.title).map((item) => (
+                                    {watched.map((item) => (
                                         <div className="item" key={item.id}>
                                             <Link to={`/detail/movie/${item.id}`}>
                                                 <img src={item.posterPath} alt={item.title} />
                                             </Link>
-                                            <button onClick={() => {
-                                                const docNamePrefix = item.title ? 'movie' : 'serie'
-                                                handleDeleteFromWatched(`${docNamePrefix}_${item.id}`)}}>X
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                                {/* Watched series */}
-                                <h3>Series</h3>
-                                <div className="mapped">
-                                    {watched.filter((item) => item.name).map((item) => (
-                                        <div className="item" key={item.id}>
-                                            <Link to={`/detail/serie/${item.id}`}>
-                                                <img src={item.posterPath} alt={item.name} />
-                                            </Link>
-                                            <button onClick={() => {
-                                                const docNamePrefix = item.title ? 'movie' : 'serie'
-                                                handleDeleteFromWatched(`${docNamePrefix}_${item.id}`)}}>X
+                                            <button onClick={() => deleteFromWatched(item.id)}>X
                                             </button>
                                         </div>
                                     ))}

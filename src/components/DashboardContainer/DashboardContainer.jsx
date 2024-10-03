@@ -27,7 +27,6 @@ function DashboardContainer () {
             try {
                 const watchListData = await getWatchlist(userId)
                 const watchedData = await getWatched(userId)
-
                 setWatchList(watchListData)
                 setWatched(watchedData)
             } catch (error) {
@@ -41,18 +40,18 @@ function DashboardContainer () {
     }, [userId, updateFlag])
 
 
-    const deleteFromWatchlist = async (movieDocName) => {
+    const deleteFromWatchlist = async (movieId) => {
         try {
             const userRef = doc(db, 'users', userId)
             const watchlistRef = collection(userRef, 'watchlist')
-            const movieRef = doc(watchlistRef, movieDocName)
+            const movieRef = doc(watchlistRef, movieId.toString())
     
             await deleteDoc(movieRef)
             setUpdateFlag(prevFlag => !prevFlag)
     
             // Show notification if movie deleted successfully
             toast({
-                title: 'Eliminada correctamente',
+                title: 'Película eliminada correctamente',
                 status: 'success',
                 duration: 2000,
                 isClosable: true,
@@ -62,7 +61,7 @@ function DashboardContainer () {
             // Show notification if there was an error
             toast({
                 title: 'Error al eliminar',
-                description: error,
+                description: error.message || "Error al eliminar la película",
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
@@ -71,18 +70,18 @@ function DashboardContainer () {
         }
     }
 
-    const deleteFromWatched = async (movieDocName) => {
+    const deleteFromWatched = async (movieId) => {
         try {
             const userRef = doc(db, 'users', userId)
             const watchedRef = collection(userRef, 'watched')
-            const movieRef = doc(watchedRef, movieDocName)
+            const movieRef = doc(watchedRef, movieId.toString())
     
             await deleteDoc(movieRef)
             setUpdateFlag(prevFlag => !prevFlag)
     
             // Show notification if movie deleted successfully
             toast({
-                title: 'Eliminada correctamente',
+                title: 'Película eliminada correctamente',
                 status: 'success',
                 duration: 2000,
                 isClosable: true,
@@ -91,8 +90,8 @@ function DashboardContainer () {
         } catch (error) {
             // Show notification if there was an error
             toast({
-                title: 'Error al eliminar',
-                description: error,
+                title: 'Error al eliminar la película',
+                description: error.message || "Error al eliminar la película",
                 status: 'error',
                 duration: 2000,
                 isClosable: true,

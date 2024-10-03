@@ -6,7 +6,6 @@ import DashboardContainer from './components/DashboardContainer/DashboardContain
 import Footer from './components/Footer/Footer'
 import NotFound from './components/NotFound/NotFound'
 import MovieDetailContainer from './components/MovieDetailContainer/MovieDetailContainer'
-import SerieDetailContainer from './components/SerieDetailContainer/SerieDetailContainer'
 import SearchResults from './components/SearchResults/SearchResults'
 // Context
 import ApiProvider from './context/ApiContext'
@@ -23,7 +22,6 @@ function App() {
           <Route path='/' element={<MainLayout /> } />
           <Route path='/profile' element={<DashboardContainer /> } />
           <Route path='/detail/movie/:id' element={ <MovieDetailContainer /> } />
-          <Route path='/detail/serie/:id' element={ <SerieDetailContainer /> } />
           <Route path='/search/:searchTerm' element={<SearchResults />}/>
           <Route path='*' element={<NotFound /> } />
         </Routes>
