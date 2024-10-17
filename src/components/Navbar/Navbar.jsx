@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Navbar.scss'
 import { TfiMenu } from "react-icons/tfi"
 import { IoMdCloseCircleOutline } from "react-icons/io"
-import { FaUserAlt } from "react-icons/fa"
+import { FaUserAlt, FaRobot } from "react-icons/fa"
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import ModalMobile from '../ModalMobile/ModalMobile'
@@ -54,6 +54,7 @@ function Navbar () {
             <Link to='/'><h1>TV Track</h1></Link>
             <SearchBar />
             <div className='buttons'>
+                <Link to='/AI-search'>Tom<FaRobot /></Link>
                 {
                     isLogged ? 
                     <div className='logged'>

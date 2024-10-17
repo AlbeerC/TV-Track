@@ -1,0 +1,36 @@
+@import '../../../scss/variables';
+
+.ia-container {
+    margin: 2rem auto;
+    min-height: 75vh;
+
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 80%;
+        background-color: #000000;
+        border-radius: 1rem;
+
+        @media (max-width: 768px) {
+            max-width: 95%;
+        }
+
+        input {
+            padding: 1rem .5rem;
+            width: 100%;
+            border-radius: 1rem;
+        }
+
+        button {
+            svg {
+                margin-left: -4rem;
+                color: $mainColor;
+                height: 3rem;
+                width: 3rem;
+                cursor: pointer;
+            }
+        }
+    }
+}

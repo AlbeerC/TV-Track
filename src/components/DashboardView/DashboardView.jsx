@@ -23,9 +23,6 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
         }
     }
 
-    console.log(watched)
-    console.log(watchList)
-
     return (
         <section className="dashboard">
             {

@@ -1,16 +1,20 @@
 import './ResultsList.scss'
 import { useApi } from "../../context/ApiContext"
 import Loading from '../Loading/Loading'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import FilterButtons from '../FilterButtons/FilterButtons'
 import { useEffect, useState } from 'react'
 
 function ResultList () {
     const api = useApi()
     const { fetchMovies, loading, getImageUrl, movies } = api
-    const pageSize = 20
     const [page, setPage] = useState(1)
-    const [selectedEndpoint, setSelectedEndpoint] = useState('popular')
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const queryParams = new URLSearchParams(location.search)
+    const initialTab = queryParams.get('tab') || 'popular'
+    const [selectedEndpoint, setSelectedEndpoint] = useState(initialTab)
 
     useEffect(() => {
         setPage(1)
@@ -28,6 +32,7 @@ function ResultList () {
 
     const handleFilterSelect = (filter) => {
         setSelectedEndpoint(filter)
+        navigate(`?tab=${filter}`)
     }
 
     return (
