@@ -24,6 +24,31 @@ header {
         }
     }
 
+    .ai-button {
+
+        @media (max-width: 768px) {
+            display: none;
+        }
+
+        color: #ffffff;
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            p {
+                font-weight: bold;
+            }
+
+            svg {
+                height: 2.5rem;
+                width: 2.5rem;
+            }
+        }
+    }
+
     .buttons {
         display: flex;
         align-items: center;
@@ -110,26 +135,4 @@ header {
 
 .modal-opened {
     overflow: hidden;
-}
-
-.logout-button {
-    height: auto !important;
-
-    @include responsive(768) {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-
-        svg {
-            font-size: 2rem;
-        }
-    }
-}
-
-.logout-text {
-    font-size: 1.6rem;
-
-    @media (min-width: 769px) {
-        display: none;
-    }
 }

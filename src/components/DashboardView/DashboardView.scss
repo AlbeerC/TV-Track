@@ -31,11 +31,6 @@
             }
         }
 
-        .logout {
-            display: block;
-            margin-left: auto;
-        }
-
         .watch-list, .watched {
             margin: 5rem 2rem;
 
@@ -109,5 +104,11 @@
             font-weight: bold;
             font-size: 2rem;
         }
+    }
+}
+
+.logout {
+    @media (max-width:768px) {
+        display: none;
     }
 }

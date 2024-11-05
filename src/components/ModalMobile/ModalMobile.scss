@@ -23,6 +23,15 @@
         font-weight: bold;
         text-align: center;
         font-family: $textFont;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        svg {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
     
         &:hover {
             background-color: #198a2e;

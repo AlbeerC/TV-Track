@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
 import AlertLogout from '../AlertLogout/AlertLogout'
+import { FaRobot } from 'react-icons/fa'
 
 function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal, closeModal}) {
 
@@ -26,6 +27,10 @@ function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal,
                         <h3>{user}</h3>
                         <button onClick={goToProfile} to='/profile'>Ir a mi perfil</button>
                         <AlertLogout />
+                            <Link to='/AI-search'>
+                                <p>Asistente IA</p>
+                                <FaRobot />
+                            </Link>
                         <SearchBar closeModal={closeModal}/>
                     </div>
 

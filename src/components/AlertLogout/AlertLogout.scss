@@ -1,0 +1,31 @@
+@import '../../scss/variables';
+
+.logout-button {
+    height: auto !important;
+
+    @media (min-width: 769px) {
+        margin: 0 0 2rem 2rem;
+
+        svg {
+            font-size: 3.5rem;
+        }
+    }
+
+    @include responsive(768) {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        svg {
+            font-size: 2rem;
+        }
+    }
+}
+
+.logout-text {
+    font-size: 1.6rem;
+
+    @media (min-width: 769px) {
+        display: none;
+    }
+}

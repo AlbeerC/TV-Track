@@ -1,3 +1,4 @@
+import './AlertLogout.scss'
 import { IoExit } from "react-icons/io5"
 import { AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton, Button} from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'

@@ -9,7 +9,6 @@ import ModalMobile from '../ModalMobile/ModalMobile'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
-import AlertLogout from '../AlertLogout/AlertLogout'
 
 function Navbar () {
 
@@ -51,15 +50,13 @@ function Navbar () {
 
     return (
         <header>
-            <Link to='/'><h1>TV Track</h1></Link>
+            <Link to='/'><h1>Peliteca</h1></Link>
             <SearchBar />
             <div className='buttons'>
-                <Link to='/AI-search'>Tom<FaRobot /></Link>
                 {
                     isLogged ? 
                     <div className='logged'>
                         <Link to='/profile'><p><FaUserAlt />{user}</p></Link>
-                        <AlertLogout />
                     </div>
                     :
                     <div className="not-logged">

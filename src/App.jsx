@@ -7,10 +7,10 @@ import Footer from './components/Footer/Footer'
 import NotFound from './components/NotFound/NotFound'
 import MovieDetailContainer from './components/MovieDetailContainer/MovieDetailContainer'
 import SearchResults from './components/SearchResults/SearchResults'
+import IAContainer from './components/IASearch/IAContainer/IAContainer'
 // Context
 import ApiProvider from './context/ApiContext'
 import AuthProvider from './context/AuthContext'
-import IAContainer from './components/IASearch/IAContainer/IAContainer'
 
 function App() {
 
@@ -24,7 +24,6 @@ function App() {
           <Route path='/profile' element={<DashboardContainer /> } />
           <Route path='/detail/movie/:id' element={ <MovieDetailContainer /> } />
           <Route path='/search/:searchTerm' element={<SearchResults />}/>
-          <Route path='/AI-search' element={<IAContainer />}/>
           <Route path='*' element={<NotFound /> } />
         </Routes>
         <Footer />

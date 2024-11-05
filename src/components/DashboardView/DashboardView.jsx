@@ -2,6 +2,7 @@ import './DashboardView.scss'
 import { Link } from 'react-router-dom'
 import Loading from '../Loading/Loading'
 import { useEffect } from 'react'
+import AlertLogout from '../AlertLogout/AlertLogout'
 
 function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, deleteFromWatched, loading } ) {
     
@@ -84,6 +85,9 @@ function DashboardView ( {isLogged, watchList, watched, deleteFromWatchlist, del
                             </div>
                         </div>
                         
+                        <div className="logout">
+                            <AlertLogout />
+                        </div>
                     </article>
                     :
                     <article className='dashboard-not-logged'>

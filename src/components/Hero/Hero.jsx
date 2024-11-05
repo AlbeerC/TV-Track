@@ -17,7 +17,7 @@ function Hero () {
                 <ul className="list">
                     <li>-Lleva un registro de lo que has visto <FaCheckCircle /></li>
                     <li>-Guarda lo que quieres ver próximamente <FaCheckCircle /></li>
-                    <li>-Brinda opiniones y comentarios <FaCheckCircle /></li>
+{/*                     <li>-Brinda opiniones y comentarios <FaCheckCircle /></li> */}
                     <li>-Descubre qué puedes ver a continuación <FaCheckCircle /></li>
                 </ul>
                 <button onClick={scrollDown}>Descubrir</button>
