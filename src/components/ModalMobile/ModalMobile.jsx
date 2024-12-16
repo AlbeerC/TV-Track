@@ -27,10 +27,6 @@ function ModalMobile({ handleLoginModal, handleRegisterModal, handleMobileModal,
                         <h3>{user}</h3>
                         <button onClick={goToProfile} to='/profile'>Ir a mi perfil</button>
                         <AlertLogout />
-                            <Link to='/AI-search'>
-                                <p>Asistente IA</p>
-                                <FaRobot />
-                            </Link>
                         <SearchBar closeModal={closeModal}/>
                     </div>
 

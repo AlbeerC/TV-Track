@@ -8,16 +8,18 @@ import { useEffect, useState } from 'react'
 function ResultList () {
     const api = useApi()
     const { fetchMovies, loading, getImageUrl, movies } = api
-    const [page, setPage] = useState(1)
 
     const navigate = useNavigate()
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
+
+    const [page, setPage] = useState(1)
+    const initialPage = Number(queryParams.get('page')) || 1
     const initialTab = queryParams.get('tab') || 'popular'
     const [selectedEndpoint, setSelectedEndpoint] = useState(initialTab)
 
     useEffect(() => {
-        setPage(1)
+        setPage(initialPage)
     }, [selectedEndpoint])
 
     useEffect(() => {
@@ -26,13 +28,16 @@ function ResultList () {
 
     const loadMore = () => {
         if (!loading) {
-            setPage(prevPage => prevPage + 1)
+            const newPage = page + 1
+            setPage(newPage)
+            navigate(`?tab=${selectedEndpoint}&page=${newPage}`)
         }
     }
 
     const handleFilterSelect = (filter) => {
         setSelectedEndpoint(filter)
-        navigate(`?tab=${filter}`)
+        setPage(1)
+        navigate(`?tab=${filter}&page=1`)
     }
 
     return (
