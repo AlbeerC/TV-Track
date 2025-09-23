@@ -7,6 +7,7 @@ function ApiProvider ( {children} ) {
     const [movies, setMovies] = useState([])
     const [movieDetails, setMovieDetails] = useState([])
     const [searchMovie, setSearchMovie] = useState([])
+    const [heroMovies, setHeroMovies] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -52,6 +53,23 @@ function ApiProvider ( {children} ) {
         }
     }
 
+    const fetchHeroMovies = async () => {
+        // Only fetch if we don't already have hero movies (caching)
+        if (heroMovies.length > 0) return
+        
+        try {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=es-MX&api_key=59a8b9ea3a6d0f0d1d790d8bb5f36d94&page=1`)
+            const result = await response.json()
+            // Get only the first 4 movies with posters
+            const moviesWithPosters = result.results.filter(movie => movie.poster_path).slice(0, 4)
+            setHeroMovies(moviesWithPosters)
+        } catch (error){
+            console.error('Error fetching hero movies:', error)
+            // Fallback to empty array on error
+            setHeroMovies([])
+        }
+    }
+
     const getImageUrl = (url) => {
         return `https://image.tmdb.org/t/p/w342${url}`
     }
@@ -61,7 +79,7 @@ function ApiProvider ( {children} ) {
     }
 
     return (
-        <ApiContext.Provider value={{movies, movieDetails, searchMovie, loading, error, fetchMovies, fetchMovieDetails, fetchSearchMovie, getImageUrl, getBackdropUrl}}>
+        <ApiContext.Provider value={{movies, movieDetails, searchMovie, heroMovies, loading, error, fetchMovies, fetchMovieDetails, fetchSearchMovie, fetchHeroMovies, getImageUrl, getBackdropUrl}}>
             {children}
         </ApiContext.Provider>
     )

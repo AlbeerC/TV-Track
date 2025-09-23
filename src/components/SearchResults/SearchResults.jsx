@@ -16,7 +16,7 @@ function SearchResults () {
     if (loading) { return <Loading /> }
 
     return (
-        <section className="search-results">
+        <section className="search-results mt-48">
             <h2>Resultados de la búsqueda: "{searchTerm}"</h2>
             <article className="map">
                 {searchMovie.map((result) => (

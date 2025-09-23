@@ -18,6 +18,16 @@ function Navbar () {
     const user = getUser ? getUser.displayName || auth.cutDomainFromEmail(getUser?.email) : null
     const isLogged = auth.isLogged
 
+    // Function to get user initials
+    const getUserInitials = (name) => {
+        if (!name) return 'U'
+        const words = name.trim().split(' ')
+        if (words.length === 1) {
+            return words[0].charAt(0).toUpperCase()
+        }
+        return (words[0].charAt(0) + words[words.length - 1].charAt(0)).toUpperCase()
+    }
+
     const [openMenu, setOpenMenu] = useState(false)
     const [openLoginModal, setOpenLoginModal] = useState(false)
     const [openRegisterModal, setOpenRegisterModal] = useState(false)
@@ -49,18 +59,25 @@ function Navbar () {
     }
 
     return (
-        <header>
+        <header className='fixed top-0 left-0 right-0 z-50 shadow-sm'>
             <Link to='/'><h1>Peliteca</h1></Link>
             <SearchBar />
             <div className='buttons'>
                 {
                     isLogged ? 
                     <div className='logged'>
-                        <Link to='/profile'><p><FaUserAlt />{user}</p></Link>
+                        <div className="user-avatar">
+                            <Link to='/profile'>
+                                <div className="avatar-circle">
+                                    {getUserInitials(user)}
+                                </div>
+                            </Link>
+                        </div>
+                        <Link to='/profile'><p>{user}</p></Link>
                     </div>
                     :
                     <div className="not-logged">
-                        <button onClick={handleLoginModal}>Inciar sesión</button>
+                        <button onClick={handleLoginModal}>Iniciar sesión</button>
                         <span>|</span>
                         <button onClick={handleRegisterModal}>Registrarse</button>
                     </div>

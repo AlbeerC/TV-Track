@@ -107,11 +107,37 @@
                         padding: 1rem;
                         border: none;
                         border-radius: 50%;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
                         
                         svg {
                             color: $black;
                             width: 2.5rem;
                             height: 2.5rem;
+                        }
+
+                        &:hover:not(:disabled) {
+                            background-color: lighten($mainColor, 10%);
+                            transform: scale(1.05);
+                        }
+
+                        &:disabled {
+                            background-color: #666;
+                            cursor: not-allowed;
+                            opacity: 0.7;
+                            transform: none;
+                            
+                            svg {
+                                color: #999;
+                            }
+                        }
+
+                        &.disabled {
+                            background-color: #28a745;
+                            
+                            svg {
+                                color: white;
+                            }
                         }
                     }
                 }

@@ -119,7 +119,7 @@ function MovieDetailContainer () {
     }
 
     return (
-        <section className="details">
+        <section className="details mt-20">
             <MovieDetail
                 movie={movieDetails}
                 addToWatchList={(movie) => addToWatchList(userId, movie)}

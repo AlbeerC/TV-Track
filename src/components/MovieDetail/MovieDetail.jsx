@@ -1,10 +1,13 @@
 import './MovieDetail.scss'
 import { useApi } from '../../context/ApiContext'
 import { useAuth } from '../../context/AuthContext'
-import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt} from "react-icons/fa"
+import { FaEye, FaBookmark, FaStar, FaRegStar, FaStarHalfAlt, FaCheck} from "react-icons/fa"
 import { format } from 'date-fns'
 import esLocale from 'date-fns/locale/es'
 import { Tooltip } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import { doc, getDoc, collection } from 'firebase/firestore'
+import { db } from '../../firebase/config'
 
 function MovieDetail ( {addToWatchList, addToWatched, movie} ) {
     
@@ -12,6 +15,48 @@ function MovieDetail ( {addToWatchList, addToWatched, movie} ) {
     const { getImageUrl, getBackdropUrl, } = api
     const auth = useAuth()
     const isLogged = auth.isLogged
+    const userId = auth.getUserId()
+
+    // State to track if movie is in user's lists
+    const [isInWatchlist, setIsInWatchlist] = useState(false)
+    const [isInWatched, setIsInWatched] = useState(false)
+    const [isChecking, setIsChecking] = useState(true)
+
+    // Function to check if movie exists in user's lists
+    const checkMovieInLists = async () => {
+        if (!userId || !movie.id) return
+        
+        try {
+            setIsChecking(true)
+            
+            // Check watchlist
+            const userRef = doc(db, 'users', userId)
+            const watchlistRef = collection(userRef, 'watchlist')
+            const watchlistMovieRef = doc(watchlistRef, movie.id.toString())
+            const watchlistSnapshot = await getDoc(watchlistMovieRef)
+            setIsInWatchlist(watchlistSnapshot.exists())
+
+            // Check watched list
+            const watchedRef = collection(userRef, 'watched')
+            const watchedMovieRef = doc(watchedRef, movie.id.toString())
+            const watchedSnapshot = await getDoc(watchedMovieRef)
+            setIsInWatched(watchedSnapshot.exists())
+            
+        } catch (error) {
+            console.error('Error checking movie in lists:', error)
+        } finally {
+            setIsChecking(false)
+        }
+    }
+
+    // Check movie status when component mounts or movie changes
+    useEffect(() => {
+        if (isLogged && movie.id) {
+            checkMovieInLists()
+        } else {
+            setIsChecking(false)
+        }
+    }, [isLogged, movie.id])
 
     const bgStyles = {
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), 
@@ -74,12 +119,24 @@ function MovieDetail ( {addToWatchList, addToWatched, movie} ) {
     // Add to list
     const posterPath = getImageUrl(movie.poster_path)
 
-    const handleAddToWatchList = () => {
-        addToWatchList({ id: movie.id, posterPath: posterPath, title: movie.title  })
+    const handleAddToWatchList = async () => {
+        if (!isInWatchlist) {
+            await addToWatchList({ id: movie.id, posterPath: posterPath, title: movie.title })
+            // Refresh the status after adding
+            setTimeout(() => {
+                checkMovieInLists()
+            }, 500)
+        }
     }
 
-    const handleAddToWatched = () => {
-        addToWatched({ id: movie.id, posterPath: posterPath, title: movie.title, runtime: movie.runtime })
+    const handleAddToWatched = async () => {
+        if (!isInWatched) {
+            await addToWatched({ id: movie.id, posterPath: posterPath, title: movie.title, runtime: movie.runtime })
+            // Refresh the status after adding
+            setTimeout(() => {
+                checkMovieInLists()
+            }, 500)
+        }
     }
 
     return (
@@ -106,11 +163,37 @@ function MovieDetail ( {addToWatchList, addToWatched, movie} ) {
                         {
                             isLogged ?
                             <div className="logged-buttons">
-                                <Tooltip hasArrow label='Agregar a películas vistas' fontSize='xl' color='#a40990' bg='#000000' fontWeight='bold'>
-                                    <button onClick={handleAddToWatched}><FaEye /></button>
+                                <Tooltip 
+                                    hasArrow 
+                                    label={isInWatched ? 'Ya está en películas vistas' : 'Agregar a películas vistas'} 
+                                    fontSize='xl' 
+                                    color='#a40990' 
+                                    bg='#000000' 
+                                    fontWeight='bold'
+                                >
+                                    <button 
+                                        onClick={handleAddToWatched}
+                                        disabled={isInWatched || isChecking}
+                                        className={isInWatched ? 'disabled' : ''}
+                                    >
+                                        {isInWatched ? <FaCheck /> : <FaEye />}
+                                    </button>
                                 </Tooltip>
-                                <Tooltip hasArrow label='Agregar a películas por ver' fontSize='xl' color='#a40990' bg='#000000' fontWeight='bold'>
-                                    <button onClick={handleAddToWatchList}><FaBookmark /></button>
+                                <Tooltip 
+                                    hasArrow 
+                                    label={isInWatchlist ? 'Ya está en películas por ver' : 'Agregar a películas por ver'} 
+                                    fontSize='xl' 
+                                    color='#a40990' 
+                                    bg='#000000' 
+                                    fontWeight='bold'
+                                >
+                                    <button 
+                                        onClick={handleAddToWatchList}
+                                        disabled={isInWatchlist || isChecking}
+                                        className={isInWatchlist ? 'disabled' : ''}
+                                    >
+                                        {isInWatchlist ? <FaCheck /> : <FaBookmark />}
+                                    </button>
                                 </Tooltip>
                             </div> 
                             :
