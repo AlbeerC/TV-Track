@@ -4,7 +4,7 @@ function Footer () {
 
     return (
         <footer>
-            <p>Desallorado por <a href="https://albertocaminos.vercel.app" target='blank'>Alberto Caminos</a></p>
+            <p>Desallorado por <a href="https://github.com/AlbeerC" target='blank'>Alberto Caminos</a></p>
         </footer>
     )
 }
